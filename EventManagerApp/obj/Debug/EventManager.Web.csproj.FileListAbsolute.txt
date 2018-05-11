@@ -1,0 +1,291 @@
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\EventManager.Web.dll.config
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\EventManager.Web.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\EventManager.Web.pdb
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Antlr3.Runtime.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\EntityFramework.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\EntityFramework.SqlServer.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Newtonsoft.Json.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Owin.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Net.Http.Formatting.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Helpers.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Http.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Http.Owin.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Http.WebHost.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Mvc.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Optimization.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Razor.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.WebPages.Deployment.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.WebPages.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.WebPages.Razor.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\WebGrease.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Antlr3.Runtime.pdb
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Newtonsoft.Json.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Net.Http.Formatting.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Helpers.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Http.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Http.Owin.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Http.WebHost.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Mvc.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Razor.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.WebPages.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.WebPages.Deployment.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.WebPages.Razor.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\System.Web.Optimization.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\EntityFramework.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\EntityFramework.SqlServer.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\obj\Debug\EventManager.Web.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\LocalAccountsApp\obj\Debug\EventManager.Web.pdb
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\EventManager.Web.dll.config
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\EventManager.Web.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\EventManager.Web.pdb
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Antlr3.Runtime.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\EntityFramework.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\EntityFramework.SqlServer.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Newtonsoft.Json.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Owin.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Net.Http.Formatting.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Helpers.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Http.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Http.Owin.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Http.WebHost.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Mvc.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Optimization.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Razor.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.WebPages.Deployment.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.WebPages.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.WebPages.Razor.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\WebGrease.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Antlr3.Runtime.pdb
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Newtonsoft.Json.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Net.Http.Formatting.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Helpers.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Http.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Http.Owin.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Http.WebHost.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Mvc.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Razor.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.WebPages.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.WebPages.Deployment.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.WebPages.Razor.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\System.Web.Optimization.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\EntityFramework.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\EntityFramework.SqlServer.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\obj\Debug\EventManager.Web.dll
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\obj\Debug\EventManager.Web.pdb
+C:\Users\DELL 15\Downloads\LocalAccountsApp-master\LocalAccountsApp-master\EventManagerApp\obj\Debug\EventManager.Web.csprojResolveAssemblyReference.cache
+D:\working\EventManager\EventManagerApp\bin\EventManager.Web.dll.config
+D:\working\EventManager\EventManagerApp\bin\EventManager.Web.dll
+D:\working\EventManager\EventManagerApp\bin\EventManager.Web.pdb
+D:\working\EventManager\EventManagerApp\bin\Antlr3.Runtime.dll
+D:\working\EventManager\EventManagerApp\bin\EntityFramework.dll
+D:\working\EventManager\EventManagerApp\bin\EntityFramework.SqlServer.dll
+D:\working\EventManager\EventManagerApp\bin\EventManager.BusinessService.dll
+D:\working\EventManager\EventManagerApp\bin\EventManager.DataModel.dll
+D:\working\EventManager\EventManagerApp\bin\EventManager.Repository.dll
+D:\working\EventManager\EventManagerApp\bin\JsonApiSerializer.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.AspNet.Identity.Core.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.Cookies.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.Facebook.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.Google.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.OAuth.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.Twitter.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Web.Infrastructure.dll
+D:\working\EventManager\EventManagerApp\bin\Newtonsoft.Json.dll
+D:\working\EventManager\EventManagerApp\bin\Owin.dll
+D:\working\EventManager\EventManagerApp\bin\Repository.Pattern.dll
+D:\working\EventManager\EventManagerApp\bin\Repository.Pattern.Ef6.dll
+D:\working\EventManager\EventManagerApp\bin\Service.Pattern.dll
+D:\working\EventManager\EventManagerApp\bin\System.Net.Http.Formatting.dll
+D:\working\EventManager\EventManagerApp\bin\System.Web.Helpers.dll
+D:\working\EventManager\EventManagerApp\bin\System.Web.Http.dll
+D:\working\EventManager\EventManagerApp\bin\System.Web.Http.Owin.dll
+D:\working\EventManager\EventManagerApp\bin\System.Web.Http.WebHost.dll
+D:\working\EventManager\EventManagerApp\bin\System.Web.Mvc.dll
+D:\working\EventManager\EventManagerApp\bin\System.Web.Optimization.dll
+D:\working\EventManager\EventManagerApp\bin\System.Web.Razor.dll
+D:\working\EventManager\EventManagerApp\bin\System.Web.WebPages.Deployment.dll
+D:\working\EventManager\EventManagerApp\bin\System.Web.WebPages.dll
+D:\working\EventManager\EventManagerApp\bin\System.Web.WebPages.Razor.dll
+D:\working\EventManager\EventManagerApp\bin\WebGrease.dll
+D:\working\EventManager\EventManagerApp\bin\LinqKit.dll
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Practices.ServiceLocation.dll
+D:\working\EventManager\EventManagerApp\bin\EventManager.BusinessService.pdb
+D:\working\EventManager\EventManagerApp\bin\EventManager.DataModel.pdb
+D:\working\EventManager\EventManagerApp\bin\EventManager.Repository.pdb
+D:\working\EventManager\EventManagerApp\bin\Repository.Pattern.Ef6.pdb
+D:\working\EventManager\EventManagerApp\bin\Repository.Pattern.pdb
+D:\working\EventManager\EventManagerApp\bin\Service.Pattern.pdb
+D:\working\EventManager\EventManagerApp\bin\Antlr3.Runtime.pdb
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.xml
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.xml
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.Cookies.xml
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.Facebook.xml
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.Google.xml
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.OAuth.xml
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Owin.Security.Twitter.xml
+D:\working\EventManager\EventManagerApp\bin\Newtonsoft.Json.xml
+D:\working\EventManager\EventManagerApp\bin\System.Net.Http.Formatting.xml
+D:\working\EventManager\EventManagerApp\bin\System.Web.Helpers.xml
+D:\working\EventManager\EventManagerApp\bin\System.Web.Http.xml
+D:\working\EventManager\EventManagerApp\bin\System.Web.Http.Owin.xml
+D:\working\EventManager\EventManagerApp\bin\System.Web.Http.WebHost.xml
+D:\working\EventManager\EventManagerApp\bin\System.Web.Mvc.xml
+D:\working\EventManager\EventManagerApp\bin\System.Web.Razor.xml
+D:\working\EventManager\EventManagerApp\bin\System.Web.WebPages.xml
+D:\working\EventManager\EventManagerApp\bin\System.Web.WebPages.Deployment.xml
+D:\working\EventManager\EventManagerApp\bin\System.Web.WebPages.Razor.xml
+D:\working\EventManager\EventManagerApp\bin\System.Web.Optimization.xml
+D:\working\EventManager\EventManagerApp\bin\EntityFramework.xml
+D:\working\EventManager\EventManagerApp\bin\EntityFramework.SqlServer.xml
+D:\working\EventManager\EventManagerApp\bin\Microsoft.AspNet.Identity.Core.xml
+D:\working\EventManager\EventManagerApp\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\working\EventManager\EventManagerApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\working\EventManager\EventManagerApp\obj\Debug\EventManager.Web.csprojResolveAssemblyReference.cache
+D:\working\EventManager\EventManagerApp\obj\Debug\EventManager.Web.dll
+D:\working\EventManager\EventManagerApp\obj\Debug\EventManager.Web.pdb
+D:\working\EventManager\EventManagerApp\bin\Microsoft.Azure.AppService.ApiApps.Service.dll
+D:\working\EventManager\EventManagerApp\bin\Swashbuckle.Core.dll
+D:\working\EventManager\EventManagerApp\bin\System.IdentityModel.Tokens.Jwt.dll
+D:\working\EventManager\EventManagerApp\bin\WebActivatorEx.dll
+D:\working\EventManager\EventManagerApp\bin\System.IdentityModel.Tokens.Jwt.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EventManager.Web.dll.config
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EventManager.Web.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EventManager.Web.pdb
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Antlr3.Runtime.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EntityFramework.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EntityFramework.SqlServer.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EventManager.BusinessService.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EventManager.DataModel.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EventManager.Repository.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\JsonApiSerializer.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Azure.AppService.ApiApps.Service.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.Cookies.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.Facebook.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.Google.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.OAuth.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.Twitter.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Web.Infrastructure.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Newtonsoft.Json.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Owin.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Repository.Pattern.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Repository.Pattern.Ef6.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Service.Pattern.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Swashbuckle.Core.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.IdentityModel.Tokens.Jwt.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Net.Http.Formatting.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Helpers.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Http.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Http.Owin.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Http.WebHost.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Mvc.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Optimization.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Razor.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.WebPages.Deployment.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.WebPages.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.WebPages.Razor.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\WebActivatorEx.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\WebGrease.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\LinqKit.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Practices.ServiceLocation.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EventManager.BusinessService.pdb
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EventManager.DataModel.pdb
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EventManager.Repository.pdb
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Repository.Pattern.Ef6.pdb
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Repository.Pattern.pdb
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Service.Pattern.pdb
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Antlr3.Runtime.pdb
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.Cookies.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.Facebook.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.Google.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.OAuth.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.Owin.Security.Twitter.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Newtonsoft.Json.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.IdentityModel.Tokens.Jwt.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Net.Http.Formatting.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Helpers.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Http.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Http.Owin.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Http.WebHost.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Mvc.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Razor.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.WebPages.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.WebPages.Deployment.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.WebPages.Razor.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\System.Web.Optimization.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EntityFramework.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\EntityFramework.SqlServer.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Projects\EventManagement\TigerApp\EventManagerApp\obj\Debug\EventManager.Web.csprojResolveAssemblyReference.cache
+D:\Projects\EventManagement\TigerApp\EventManagerApp\obj\Debug\EventManager.Web.dll
+D:\Projects\EventManagement\TigerApp\EventManagerApp\obj\Debug\EventManager.Web.pdb
