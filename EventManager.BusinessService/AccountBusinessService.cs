@@ -22,7 +22,8 @@ namespace EventManager.BusinessService
 		public AccountBusinessServiceService(IRepositoryAsync<AspNetUser> repository)
 			: base(repository)
 		{
-			_repository = repository;
+            //_repository = null;
+            _repository = repository;
 		}
 
 	
