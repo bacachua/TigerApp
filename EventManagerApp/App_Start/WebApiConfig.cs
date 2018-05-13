@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using System.Net.Http.Headers;
 
 namespace EventManager.Web
 {
@@ -28,6 +29,7 @@ namespace EventManager.Web
 
             // Enforce HTTPS
             //config.Filters.Add(new EventManager.Web.Filters.RequireHttpsAttribute());
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }
     }
 }
