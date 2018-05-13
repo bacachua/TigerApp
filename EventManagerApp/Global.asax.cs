@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -19,5 +21,16 @@ namespace EventManager.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+    }
+    public enum eResponseStatus: int
+    {
+        Success = 0,
+        Fail = 1
+    }
+    public class APIResponse
+    {
+        public eResponseStatus Status { get; set; }
+        public string Message { get; set; }
+        public object Result { get; set; }
     }
 }
