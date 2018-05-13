@@ -1,9 +1,10 @@
+using Repository.Pattern.Ef6;
 using System;
 using System.Collections.Generic;
 
 namespace EventManager.DataModel.Models
 {
-    public partial class City
+    public partial class City : Entity
     {
         public City()
         {

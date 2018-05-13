@@ -21,6 +21,10 @@ using Repository.Pattern.UnitOfWork;
 using EventManager.DataModel.Models;
 using Repository.Pattern.Ef6;
 using Repository.Pattern.Infrastructure;
+using Repository.Pattern.Repositories;
+using EventManager.BusinessService;
+using System.Data.Entity.Validation;
+using System.Linq;
 
 namespace EventManager.Web.Controllers
 {
@@ -319,7 +323,6 @@ namespace EventManager.Web.Controllers
                 };
                 logins.Add(login);
             }
-
             return logins;
         }
 
@@ -336,7 +339,19 @@ namespace EventManager.Web.Controllers
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+			model.Id = user.Id;
+			model.UserName = user.UserName;
+			model.SecurityStamp = user.SecurityStamp;
+			model.PasswordHash = user.PasswordHash;
+			try
+			{
+				Tuple<bool, string> updateResult = UpdateUserInfo(model);
+			}
+			catch(Exception ex)
+			{
 
+			}
+			
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -378,62 +393,51 @@ namespace EventManager.Web.Controllers
             return Ok();
         }
 
-		private void UpdateUserInfo(RegisterBindingModel model)
+		private Tuple<bool, string> UpdateUserInfo(RegisterBindingModel model)
 		{
-			//try
-			//{
-			//	// TODO: Add update logic here
-			//	AspNetUser eventRegister = new AspNetUser();
-			//	eventRegister.ObjectState = ObjectState.Modified;
-			//	eventRegister.Id = model.Id;
-			//	//eventRegister.BirthDate = model.BirthDate;
-			//	eventRegister.Email = model.Email;
-			//	eventRegister.CityId = model.CityId;
-			//	using (IDataContextAsync context = new GameManagerContext())
-			//	using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
-			//	{
-			//		//IRepositoryAsync<EventRegister> customerRepository = new Repository<EventRegister>(context, unitOfWork);
-			//		//IEventRegisterBusinessService customerService = new EventRegisterBusinessService(customerRepository);
-			//		//// Testing changes to graph while disconncted from it's orginal DataContext
-			//		//// Saving changes while graph was previous DataContext that was already disposed
-			//		//customerRepository.Insert(eventRegister);
-			//		//// customerRepository.InsertOrUpdateGraph(customerForUpdateDeleteGraphTest);
-			//		//unitOfWork.SaveChanges();
-			//	}
-			//}
-			//catch (DbEntityValidationException ex)
-			//{
-			//	var error = ex.EntityValidationErrors.First().ValidationErrors.First();
-			//	//this.ModelState.AddModelError(error.PropertyName, Resources.UIValidation.DealerNameRequied);
-			//	var myError = new Error
-			//	{
-			//		Status = "failed",
-			//		Message = "Internal Error" + ex.Message
-			//	};
+			Tuple<bool, string> ret = new Tuple<bool, string>(true, "Success");
+			try
+			{
+				// TODO: Add update logic here
+				AspNetUser aspNetUser = new AspNetUser();
 
-			//	return Newtonsoft.Json.JsonConvert.SerializeObject(myError);
+				using (IDataContextAsync context = new GameManagerContext())
+				using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+				{
+					IRepositoryAsync<AspNetUser> acctRepository = new Repository<AspNetUser>(context, unitOfWork);
+					AccountBusinessServiceService AccountBusinessServiceService = new AccountBusinessServiceService(acctRepository);
 
-			//}
-			//catch (Exception ex)
-			//{
-			//	//Debug.WriteLine(ex.Message);
-			//	//return RedirectToAction("List");
-			//	var myError = new Error
-			//	{
-			//		Status = "failed",
-			//		Message = "Internal Error" + ex.Message
-			//	};
+					aspNetUser = acctRepository.Queryable().Where(x => x.Id == model.Id).SingleOrDefault<AspNetUser>();
+					aspNetUser.ObjectState = ObjectState.Modified;
+					aspNetUser.Id = model.Id;
+					aspNetUser.BirthDate = model.BirthDate;
+					aspNetUser.Email = model.Email;
+					aspNetUser.CityId = model.CityId;
+					aspNetUser.FullName = model.FullName;
+					aspNetUser.FirstName = model.FirstName;
+					aspNetUser.LastName = model.LastName;
+					aspNetUser.QRCode = model.QRCode;
+					aspNetUser.BirthDate = model.BirthDate;
+					aspNetUser.PhoneNumber = model.PhoneNumber;
+					aspNetUser.Address = model.Address;
+					aspNetUser.UserName = model.UserName;
 
-			//	return Newtonsoft.Json.JsonConvert.SerializeObject(myError);
-			//}
+					acctRepository.InsertOrUpdateGraph(aspNetUser);
+					unitOfWork.SaveChanges();
+				}
+			}
+			catch (DbEntityValidationException ex)
+			{
 
-			//var okResult = new Error
-			//{
-			//	Status = "Success",
-			//	Message = "Game successfully registered for user "
-			//};
+				ret = new Tuple<bool, string>(false, ex.Message);
 
-			//return Newtonsoft.Json.JsonConvert.SerializeObject(okResult);
+			}
+			catch (Exception ex)
+			{
+				ret = new Tuple<bool, string>(false, ex.Message);
+			}
+
+			return ret;
 		}
         protected override void Dispose(bool disposing)
         {
