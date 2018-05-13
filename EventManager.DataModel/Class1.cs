@@ -8,5 +8,9 @@ namespace EventManager.DataModel
 {
     public class Class1
     {
+		public Class1()
+		{
+
+		}
     }
 }
