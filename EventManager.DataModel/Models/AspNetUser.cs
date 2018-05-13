@@ -43,6 +43,8 @@ namespace EventManager.DataModel.Models
         public Nullable<int> CityId { get; set; }
         public string QRCode { get; set; }
         public string Comment { get; set; }
+		
+		public string DeviceId { get; set; }
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<EventRegister> EventRegisters { get; set; }

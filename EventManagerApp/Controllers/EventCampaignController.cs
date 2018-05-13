@@ -37,7 +37,7 @@ namespace EventManager.Web.Controllers
 				IEventCampaignBusinessService billingService = new EventCampaignBusinessService(campaignRepository);
 
 				IQueryFluent<EventCampaign> q = campaignRepository.Query(x => x.EventCampaignID > 0);
-				eventCampaignList = q.Select(y => new EventCampaignModel { EventCampaignID = y.EventCampaignID, CityID = y.City.CityID, EventID = y.EventID, StartDateTime = y.StartDateTime, EndDateTime = y.EndDateTime, TimeToPlayPerSession = y.TimeToPlayPerSession, NumberOfPlayer1Time = y.NumberOfPlayer1Time, Active = y.Active, WaitingTime = 0, CityName = y.City.Name }).ToList();
+				eventCampaignList = q.Select(y => new EventCampaignModel { EventCampaignID = y.EventCampaignID, EventID = y.EventID, EventName = y.Event.Name, CityID = y.City.CityID, CityName = y.City.Name, StartDateTime = y.StartDateTime, EndDateTime = y.EndDateTime, TimeToPlayPerSession = y.TimeToPlayPerSession, NumberOfPlayer1Time = y.NumberOfPlayer1Time, Active = y.Active, WaitingTime = 0 }).ToList();
 				//eventCampaignList = q.SelectAsync().Result.ToList();
 					//(t => new EventCampaignModel { EventCampaignID  = q.EventCampaignID});
 
@@ -89,7 +89,7 @@ namespace EventManager.Web.Controllers
 				IEventCampaignBusinessService billingService = new EventCampaignBusinessService(campaignRepository);
 
 				IQueryFluent<EventCampaign> q = campaignRepository.Query(x => x.EventCampaignID == id);
-				eventCampaign = q.Select(y => new EventCampaignModel { EventCampaignID = y.EventCampaignID, CityID = y.City.CityID, EventID = y.EventID, StartDateTime = y.StartDateTime, EndDateTime = y.EndDateTime, TimeToPlayPerSession = y.TimeToPlayPerSession, NumberOfPlayer1Time = y.NumberOfPlayer1Time, Active = y.Active, WaitingTime = 0, CityName = y.City.Name }).FirstOrDefault();
+				eventCampaign = q.Select(y => new EventCampaignModel { EventCampaignID = y.EventCampaignID, EventID = y.EventID,EventName = y.Event.Name, CityID = y.City.CityID, CityName = y.City.Name, StartDateTime = y.StartDateTime, EndDateTime = y.EndDateTime, TimeToPlayPerSession = y.TimeToPlayPerSession, NumberOfPlayer1Time = y.NumberOfPlayer1Time, Active = y.Active, WaitingTime = 0 }).FirstOrDefault();
 				//eventCampaignList = q.SelectAsync().Result.ToList();
 				//(t => new EventCampaignModel { EventCampaignID  = q.EventCampaignID});
 

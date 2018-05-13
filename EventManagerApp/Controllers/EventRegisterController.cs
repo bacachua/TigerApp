@@ -18,6 +18,7 @@ using System.Data.Entity.Validation;
 
 namespace EventManager.Web.Controllers
 {
+	 [RoutePrefix("api/EventRegister")]
     public class EventRegisterController : ApiController
     {
         // GET: api/EventRegister
@@ -66,7 +67,7 @@ namespace EventManager.Web.Controllers
 				eventRegister.EventCampaignID= model.EventCampaignID;
 				eventRegister.UserId = model.UserId;
 				eventRegister.StartDateTime = model.StartDateTime;
-				eventRegister.Status = model.Status;
+				eventRegister.Status = 0;
 				using (IDataContextAsync context = new GameManagerContext())
 				using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
 				{
@@ -123,5 +124,23 @@ namespace EventManager.Web.Controllers
         public void Delete(int id)
         {
         }
+
+		[AllowAnonymous]
+		[HttpGet]
+
+		
+		public string Tuan(int id)
+		{
+			return id.ToString();
+		}
+
+		[AllowAnonymous]
+		[HttpGet]
+
+		
+		public IEnumerable<string> ttt()
+		{
+			return new string[] { "value1", "value2" };
+		}
     }
 }
