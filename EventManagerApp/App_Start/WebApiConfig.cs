@@ -29,7 +29,7 @@ namespace EventManager.Web
 
             // Enforce HTTPS
             //config.Filters.Add(new EventManager.Web.Filters.RequireHttpsAttribute());
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html")); 
         }
     }
 }
