@@ -123,5 +123,12 @@ namespace EventManager.Web.Controllers
         public void Delete(int id)
         {
         }
+
+		[AllowAnonymous]
+		[HttpGet]
+		public string Tuan(int id)
+		{
+			return id.ToString();
+		}
     }
 }

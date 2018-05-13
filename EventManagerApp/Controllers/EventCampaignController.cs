@@ -27,7 +27,7 @@ namespace EventManager.Web.Controllers
         // GET: api/EventCampaig
 		[AllowAnonymous]
 		[HttpGet]
-		public string Get()
+		public HttpResponseMessage Get()
         {
 			List<EventCampaignModel> eventCampaignList = null;
 			using (IDataContextAsync context = new GameManagerContext())
@@ -38,48 +38,23 @@ namespace EventManager.Web.Controllers
 
 				IQueryFluent<EventCampaign> q = campaignRepository.Query(x => x.EventCampaignID > 0);
 				eventCampaignList = q.Select(y => new EventCampaignModel { EventCampaignID = y.EventCampaignID, CityID = y.City.CityID, EventID = y.EventID, StartDateTime = y.StartDateTime, EndDateTime = y.EndDateTime, TimeToPlayPerSession = y.TimeToPlayPerSession, NumberOfPlayer1Time = y.NumberOfPlayer1Time, Active = y.Active, WaitingTime = 0, CityName = y.City.Name }).ToList();
-				//eventCampaignList = q.SelectAsync().Result.ToList();
-					//(t => new EventCampaignModel { EventCampaignID  = q.EventCampaignID});
-
-				//eventCampaignList = asyncTask.Result.Select( new EventCampaignModel{ }};
-				
+							
 				if (eventCampaignList == null)
 				{
-					var myError = new Error
-					{
-						Status = "failed",
-						Message = "not found"
-					};
-					
-					return Newtonsoft.Json.JsonConvert.SerializeObject(myError);
+					throw new HttpResponseException(HttpStatusCode.NotFound);
 					
 				}
 				else
 				{
-					//ret = Ok(test);
-					//DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(List<EventCampaign>));
-					//MemoryStream msObj = new MemoryStream();
-					//js.WriteObject(msObj, eventCampaignList);
-					//msObj.Position = 0;
-					//StreamReader sr = new StreamReader(msObj);
-
-					//// "{\"Description\":\"Share Knowledge\",\"Name\":\"C-sharpcorner\"}"  
-					//string json = sr.ReadToEnd();
-
-					//sr.Close();
-					//msObj.Close();  
-					return Newtonsoft.Json.JsonConvert.SerializeObject(eventCampaignList);
-					//return json;
+					return Request.CreateResponse(eventCampaignList);					
 				}
-
-
 			}
         }
 
         // GET: api/EventCampaign/5
 		[AllowAnonymous]
 		[HttpGet]
-        public string Get(int id)
+		public HttpResponseMessage Get(int id)
         {
            	EventCampaignModel eventCampaign = null;
 			using (IDataContextAsync context = new GameManagerContext())
@@ -90,26 +65,14 @@ namespace EventManager.Web.Controllers
 
 				IQueryFluent<EventCampaign> q = campaignRepository.Query(x => x.EventCampaignID == id);
 				eventCampaign = q.Select(y => new EventCampaignModel { EventCampaignID = y.EventCampaignID, CityID = y.City.CityID, EventID = y.EventID, StartDateTime = y.StartDateTime, EndDateTime = y.EndDateTime, TimeToPlayPerSession = y.TimeToPlayPerSession, NumberOfPlayer1Time = y.NumberOfPlayer1Time, Active = y.Active, WaitingTime = 0, CityName = y.City.Name }).FirstOrDefault();
-				//eventCampaignList = q.SelectAsync().Result.ToList();
-				//(t => new EventCampaignModel { EventCampaignID  = q.EventCampaignID});
-
-				//eventCampaignList = asyncTask.Result.Select( new EventCampaignModel{ }};
-
 				if (eventCampaign == null)
 				{
-					var myError = new Error
-					{
-						Status = "failed",
-						Message = "not found"
-					};
-
-					return Newtonsoft.Json.JsonConvert.SerializeObject(myError);
+					throw new HttpResponseException(HttpStatusCode.NotFound);
 
 				}
 				else
 				{
-					return Newtonsoft.Json.JsonConvert.SerializeObject(eventCampaign);
-
+					return Request.CreateResponse(eventCampaign);
 				}
 			}
         }

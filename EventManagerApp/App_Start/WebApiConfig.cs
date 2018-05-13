@@ -19,6 +19,12 @@ namespace EventManager.Web
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+			//Action API
+			config.Routes.MapHttpRoute(
+			  name: "ActionApi",
+			  routeTemplate: "api/{controller}/{action}/{id}",
+			  defaults: new { id = RouteParameter.Optional }
+			);
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
