@@ -17,6 +17,6 @@ namespace EventManager.DataModel.Models
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual EventCampaign EventCampaign { get; set; }
 
-		public byte Status { get; set; }
+		public int Status { get; set; }
     }
 }

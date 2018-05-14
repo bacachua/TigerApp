@@ -23,5 +23,7 @@ namespace Repository.Pattern.Repositories
         IQueryable<TEntity> Queryable();
         IQueryable<TEntity> Queryable(int? page = null, int? pageSize = null);
         IRepository<T> GetRepository<T>() where T : class, IObjectState;
+        IQueryable<TEntity> AllIncluding(params Expression<Func<TEntity, object>>[] includeProperties);
+        IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> predicate);
     }
 }

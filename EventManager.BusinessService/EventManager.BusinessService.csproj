@@ -52,6 +52,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventManager.ApiModels\EventManager.ApiModels.csproj">
+      <Project>{98c54df9-c246-4b32-b418-8db4d9f61985}</Project>
+      <Name>EventManager.ApiModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventManager.DataModel\EventManager.DataModel.csproj">
       <Project>{59b61c07-75e3-44f8-b153-170af90a3bcd}</Project>
       <Name>EventManager.DataModel</Name>

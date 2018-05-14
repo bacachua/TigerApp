@@ -23,6 +23,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -293,6 +294,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EventManager.ApiModels\EventManager.ApiModels.csproj">
+      <Project>{98c54df9-c246-4b32-b418-8db4d9f61985}</Project>
+      <Name>EventManager.ApiModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EventManager.BusinessService\EventManager.BusinessService.csproj">
       <Project>{5267fdb0-e1cd-4de7-b961-96b5ac756382}</Project>
       <Name>EventManager.BusinessService</Name>

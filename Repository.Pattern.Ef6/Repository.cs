@@ -266,5 +266,23 @@ namespace Repository.Pattern.Ef6
                     SyncObjectGraph(item);
             }
         }
+
+        public virtual IQueryable<TEntity> All()
+        {
+            return _dbSet.AsQueryable();
+        }
+        public IQueryable<TEntity> AllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            IQueryable<TEntity> query = _dbSet.AsNoTracking();
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+            return query;
+        }
+        public virtual IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _dbSet.AsQueryable<TEntity>().AsExpandable().Where(predicate);
+        }
     }
 }

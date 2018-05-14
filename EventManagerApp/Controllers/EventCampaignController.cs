@@ -18,6 +18,7 @@ using EventManager.Web.Results;
 using System.Runtime.Serialization.Json;
 using System.IO;
 using EventManager.Web.Models;
+using EventManager.ApiModels;
 
 namespace EventManager.Web.Controllers
 {
@@ -25,7 +26,7 @@ namespace EventManager.Web.Controllers
     public class EventCampaignController : ApiController
     {
         // GET: api/EventCampaig
-		[AllowAnonymous]
+        [AllowAnonymous]
 		[HttpGet]
 		public HttpResponseMessage Get()
         {
@@ -107,6 +108,21 @@ namespace EventManager.Web.Controllers
         // DELETE: api/EventCampaign/5
         public void Delete(int id)
         {
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public APIResponse GetListAvailable()
+        {
+            var result = new List<ApiEventCampaignModel>();
+            using (IDataContextAsync context = new GameManagerContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            {
+                IRepositoryAsync<EventCampaign> campaignRepository = new Repository<EventCampaign>(context, unitOfWork);
+                IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService(campaignRepository);
+                result = eVentCampaignSrv.GetListAvailable();
+            }
+            return new APIResponse() { Status = eResponseStatus.Success, Result = result };
         }
     }
 }
