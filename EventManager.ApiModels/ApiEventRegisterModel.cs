@@ -9,7 +9,7 @@ namespace EventManager.ApiModels
     public class ApiEventRegisterModel
     {
         public int EventRegisterID { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
         public int TimeToPlayPerSession { get; set; }
