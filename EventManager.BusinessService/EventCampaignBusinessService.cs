@@ -18,11 +18,14 @@ namespace EventManager.BusinessService
     public interface IEventCampaignBusinessService
     {
         List<ApiEventCampaignModel> GetListAvailable();
+        bool IsValidTimeRegister(ApiEventRegisterModel model);
+        bool RegisterEvent(ApiEventRegisterModel model);
     }
 
     public class EventCampaignBusinessService : IEventCampaignBusinessService
     {
         private IRepositoryAsync<EventCampaign> _repository;
+        private IRepositoryAsync<EventRegister> _eventRegisterRepo;
         public EventCampaignBusinessService()
         {
 
@@ -64,6 +67,52 @@ namespace EventManager.BusinessService
             }
             return models;
         }
+        public bool IsValidTimeRegister(ApiEventRegisterModel model)
+        {
+            using (IDataContextAsync context = new GameManagerContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            {
+                _repository = new Repository<EventCampaign>(context, unitOfWork);
+                var entity = _repository.AllIncluding(c => c.EventRegisters).FirstOrDefault(c=>c.EventCampaignID == model.EventCampaignID);
+                if(model.StartDateTime < entity.StartDateTime || model.EndDateTime >= entity.EndDateTime)
+                {
+                    return false;
+                }
+                else if(entity.EventRegisters.Any(c=> 
+                                                (c.StartDateTime >= model.StartDateTime && c.StartDateTime < model.EndDateTime)
+                                                ||
+                                                (c.EndDateTime >= model.EndDateTime && c.EndDateTime >= model.StartDateTime)
+                                                ))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
+        public bool RegisterEvent(ApiEventRegisterModel model)
+        {
+            var valid = IsValidTimeRegister(model);
+            if (valid)
+            {
+                EventRegister entity = new EventRegister();
+                entity.Status = (int)eEventRegisterStatus.New;
+                entity.EndDateTime = model.EndDateTime;
+                entity.EventCampaignID = model.EventCampaignID;
+                entity.NumberOfPlayer1Time = model.NumberOfPlayer1Time;
+                entity.StartDateTime = model.StartDateTime;
+                entity.TimeToPlayPerSession = model.TimeToPlayPerSession;
+                entity.UserId = model.UserId.ToString();
+                entity.Active = true;
+                using (IDataContextAsync context = new GameManagerContext())
+                using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+                {
+                    _eventRegisterRepo = new Repository<EventRegister>(context, unitOfWork);
+                    _eventRegisterRepo.Insert(entity);
+                    unitOfWork.SaveChanges();
+                }
+            }
+            return valid;
+        }
     }
 }

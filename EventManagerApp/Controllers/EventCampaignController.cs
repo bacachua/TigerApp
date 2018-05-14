@@ -48,5 +48,21 @@ namespace EventManager.Web.Controllers
             var result = eVentCampaignSrv.GetListAvailable();
             return new APIResponse() { Status = eResponseStatus.Success, Result = result };
         }
+        [AllowAnonymous]
+        [HttpPost]
+        public APIResponse IsValidTimeRegister(ApiEventRegisterModel model)
+        {
+            IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
+            var result = eVentCampaignSrv.IsValidTimeRegister(model);
+            return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public APIResponse RegisterEvent(ApiEventRegisterModel model)
+        {
+            IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
+            var result = eVentCampaignSrv.RegisterEvent(model);
+            return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+        }
     }
 }
