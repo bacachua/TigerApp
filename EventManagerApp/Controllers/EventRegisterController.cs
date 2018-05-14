@@ -38,17 +38,17 @@ namespace EventManager.Web.Controllers
         // POST: api/EventRegister
 		[AllowAnonymous]
 		[HttpPost]
-		public string Post(EventRegisterModel model)
+		public HttpResponseMessage Post(EventRegisterModel model)
         {
 			if (!ModelState.IsValid)
 			{
 				var myError = new Error
 				{
-					Status = "failed",
-					Message = "Model not Valid"
+					Status = Resources.ApiMsg.Failed,
+					Message = Resources.ApiMsg.NotValidModel
 				};
-
-				return Newtonsoft.Json.JsonConvert.SerializeObject(myError);
+				return Request.CreateResponse(HttpStatusCode.OK, myError);
+				//return Newtonsoft.Json.JsonConvert.SerializeObject(myError);
 			}
 
 			var eventRegisterModel = new EventRegisterModel()
@@ -86,11 +86,11 @@ namespace EventManager.Web.Controllers
 				//this.ModelState.AddModelError(error.PropertyName, Resources.UIValidation.DealerNameRequied);
 				var myError = new Error
 				{
-					Status = "failed",
-					Message = "Internal Error" + ex.Message
+					Status = Resources.ApiMsg.Failed,
+					Message = Resources.ApiMsg.InternalError + ex.Message
 				};
-
-				return Newtonsoft.Json.JsonConvert.SerializeObject(myError);
+				return Request.CreateResponse(HttpStatusCode.OK, myError);
+				//return Newtonsoft.Json.JsonConvert.SerializeObject(myError);
 
 			}
 			catch (Exception ex)
@@ -99,20 +99,20 @@ namespace EventManager.Web.Controllers
 				//return RedirectToAction("List");
 				var myError = new Error
 				{
-					Status = "failed",
-					Message = "Internal Error" + ex.Message
+					Status = Resources.ApiMsg.Failed,
+					Message = Resources.ApiMsg.InternalError + ex.Message
 				};
-
-				return Newtonsoft.Json.JsonConvert.SerializeObject(myError);
+				return Request.CreateResponse(HttpStatusCode.OK, myError);
+				//return Newtonsoft.Json.JsonConvert.SerializeObject(myError);
 			}
 
 			var okResult = new Error
 			{
-				Status = "Success",
-				Message = "Game successfully registered for user "
+				Status = Resources.ApiMsg.Success,
+				Message = "Game successfully registered for user"
 			};
-
-			return Newtonsoft.Json.JsonConvert.SerializeObject(okResult);
+			return Request.CreateResponse(HttpStatusCode.OK, okResult);
+			//return Newtonsoft.Json.JsonConvert.SerializeObject(okResult);
         }
 
         // PUT: api/EventRegister/5

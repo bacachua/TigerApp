@@ -422,16 +422,12 @@ namespace EventManager.Web.Controllers
 			}
 			catch (DbEntityValidationException ex)
 			{
-
 				ret = new Tuple<bool, string>(false, ex.Message);
-
 			}
 			catch (Exception ex)
 			{			
 				ret = new Tuple<bool, string>(false, ex.Message);
-			}
-
-		
+			}		
 			return ret;
 		}
         protected override void Dispose(bool disposing)

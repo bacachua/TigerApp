@@ -16,7 +16,5 @@ namespace EventManager.Web.Models
 		public Nullable<bool> Active { get; set; }
 		public Nullable<int> EventCampaignID { get; set; }
 		public int Status { get; set; }
-
-		public Nullable<System.DateTime> BirthDate { get; set; }
 	}
 }
