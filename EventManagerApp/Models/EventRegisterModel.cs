@@ -15,6 +15,6 @@ namespace EventManager.Web.Models
 		public Nullable<int> NumberOfPlayer1Time { get; set; }
 		public Nullable<bool> Active { get; set; }
 		public Nullable<int> EventCampaignID { get; set; }
-		public int Status { get; set; }
+		public byte Status { get; set; }
 	}
 }

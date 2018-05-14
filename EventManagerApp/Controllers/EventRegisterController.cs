@@ -136,11 +136,34 @@ namespace EventManager.Web.Controllers
 
 		[AllowAnonymous]
 		[HttpGet]
-
-		
-		public IEnumerable<string> ttt()
+		[Route("api/api/EventRegister/ByUser")]
+		public HttpResponseMessage RegisterEventByUser(string userId)
 		{
-			return new string[] { "value1", "value2" };
+			List<EventRegisterModel> eventCampaignList = null;
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				IRepositoryAsync<EventRegister> eventRegisterRepository = new Repository<EventRegister>(context, unitOfWork);
+				IEventRegisterBusinessService billingService = new EventRegisterBusinessService(eventRegisterRepository);
+
+				IQueryFluent<EventRegister> q = eventRegisterRepository.Query(x => x.UserId == userId);
+				eventCampaignList = q.Select(y => new EventRegisterModel { UserId = y.UserId, StartDateTime = y.StartDateTime, EventCampaignID =y.EventCampaignID, Status = y.Status,NumberOfPlayer1Time = y.NumberOfPlayer1Time, TimeToPlayPerSession =  y.TimeToPlayPerSession }).ToList();
+
+				if (eventCampaignList == null)
+				{
+					var myError = new Error
+					{
+						Status = Resources.ApiMsg.Failed,
+						Message = Resources.ApiMsg.NoRecordFound
+					};
+					return Request.CreateResponse(HttpStatusCode.OK, myError);
+					//throw new HttpResponseException(HttpStatusCode.NotFound);
+				}
+				else
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, eventCampaignList);
+				}
+			}
 		}
     }
 }
