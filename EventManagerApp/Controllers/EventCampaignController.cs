@@ -64,5 +64,14 @@ namespace EventManager.Web.Controllers
             var result = eVentCampaignSrv.RegisterEvent(model);
             return new APIResponse() { Status = eResponseStatus.Success, Result = result };
         }
+
+		[AllowAnonymous]
+		[HttpPost]
+		public APIResponse EventCampaignByCity(int cityId)
+		{
+			IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
+			var result = eVentCampaignSrv.GetListByCity(cityId);
+			return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+		}
     }
 }

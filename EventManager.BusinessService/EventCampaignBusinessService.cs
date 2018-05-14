@@ -20,6 +20,7 @@ namespace EventManager.BusinessService
         List<ApiEventCampaignModel> GetListAvailable();
         bool IsValidTimeRegister(ApiEventRegisterModel model);
         bool RegisterEvent(ApiEventRegisterModel model);
+		List<ApiEventCampaignModel> GetListByCity(int cityid);
     }
 
     public class EventCampaignBusinessService : IEventCampaignBusinessService
@@ -39,7 +40,7 @@ namespace EventManager.BusinessService
             {
                 _repository = new Repository<EventCampaign>(context, unitOfWork);                
                 var currentTime = DateTime.Now;
-                var entities = _repository.AllIncluding(c => c.City, c => c.Event, c => c.EventRegisters).Where(c => c.StartDateTime >= currentTime).OrderBy(c => c.EventCampaignID).OrderBy(c => c.StartDateTime).ToList();
+                var entities = _repository.AllIncluding(c => c.City, c => c.Event).Where(c => c.StartDateTime >= currentTime).OrderBy(c => c.EventCampaignID).OrderBy(c => c.StartDateTime).ToList();
                 models = entities.Select(c => new ApiEventCampaignModel()
                 {
                     EventCampaignID = c.EventCampaignID,
@@ -114,5 +115,29 @@ namespace EventManager.BusinessService
             }
             return valid;
         }
+
+		public List<ApiEventCampaignModel> GetListByCity(int cityid)
+		{
+			List<ApiEventCampaignModel> models = new List<ApiEventCampaignModel>();
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				_repository = new Repository<EventCampaign>(context, unitOfWork);
+				var currentTime = DateTime.Now;
+				var entities = _repository.AllIncluding(c => c.City, c => c.Event).Where((c => c.StartDateTime >= currentTime && c.CityID == cityid)).OrderBy(c => c.EventCampaignID).OrderBy(c => c.StartDateTime).ToList();
+				models = entities.Select(c => new ApiEventCampaignModel()
+				{
+					EventCampaignID = c.EventCampaignID,
+					EventName = c.Event.Name,
+					CityName = c.City.Name,
+					StartDateTime = c.StartDateTime,
+					EndDateTime = c.EndDateTime,
+					TimeToPlayPerSession = c.TimeToPlayPerSession,
+					NumberOfPlayer1Time = c.NumberOfPlayer1Time
+				}).ToList();
+				
+			}
+			return models;
+		}
     }
 }
