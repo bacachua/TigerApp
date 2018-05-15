@@ -20,6 +20,10 @@ namespace EventManager.ApiModels
     }
     public enum eEventRegisterStatus: int
     {
-        New = 0
+        New = 0,
+        Cancelled,
+        Reminded,
+        Late,
+        Played
     }
 }

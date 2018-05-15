@@ -40,7 +40,7 @@ namespace EventManager.DataModel.Models
         public string Gender { get; set; }
         public string IdentityNumber { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
-        public Nullable<int> CityId { get; set; }
+        public int CityId { get; set; }
         public string QRCode { get; set; }
         public string Comment { get; set; }
 		
