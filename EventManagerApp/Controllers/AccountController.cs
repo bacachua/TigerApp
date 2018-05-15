@@ -75,6 +75,20 @@ namespace EventManager.Web.Controllers
             };
         }
 
+		[HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+		[Route("UserInfoById")]
+		public UserInfoViewModel GetUserInfoById(string userId)
+		{
+			ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+
+			return new UserInfoViewModel
+			{
+				Email = User.Identity.GetUserName(),
+				HasRegistered = externalLogin == null,
+				LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
+			};
+		}
+
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()

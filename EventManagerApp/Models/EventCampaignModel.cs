@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -13,10 +14,19 @@ namespace EventManager.Web.Models
         }
 
         public int EventCampaignID { get; set; }
+		
+		[Required]
         public Nullable<int> EventID { get; set; }
+
+		[Required]
 		public string EventName { get; set; }
+
+		[Required]
         public Nullable<int> CityID { get; set; }
+
+		[Required]
         public Nullable<System.DateTime> StartDateTime { get; set; }
+		[Required]
         public Nullable<System.DateTime> EndDateTime { get; set; }
         public Nullable<int> TimeToPlayPerSession { get; set; }
         public Nullable<int> NumberOfPlayer1Time { get; set; }
