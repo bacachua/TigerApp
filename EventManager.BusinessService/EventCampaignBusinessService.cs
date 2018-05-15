@@ -40,7 +40,7 @@ namespace EventManager.BusinessService
             {
                 _repository = new Repository<EventCampaign>(context, unitOfWork);                
                 var currentTime = DateTime.Now;
-                var entities = _repository.AllIncluding(c => c.City, c => c.Event).Where(c => c.StartDateTime >= currentTime).OrderBy(c => c.EventCampaignID).OrderBy(c => c.StartDateTime).ToList();
+                var entities = _repository.AllIncluding(c => c.City, c => c.Event, c=>c.EventRegisters).Where(c => c.StartDateTime >= currentTime || c.EndDateTime > currentTime).OrderBy(c => c.EventCampaignID).OrderBy(c => c.StartDateTime).ToList();
                 models = entities.Select(c => new ApiEventCampaignModel()
                 {
                     EventCampaignID = c.EventCampaignID,
@@ -57,9 +57,12 @@ namespace EventManager.BusinessService
                     var startTime = new DateTime(item.StartDateTime.Value.Year, item.StartDateTime.Value.Month, item.StartDateTime.Value.Day, item.StartDateTime.Value.Hour, item.StartDateTime.Value.Minute, 0);
                     while (startTime <= item.EndDateTime.Value)
                     {
-                        if (!entity.EventRegisters.Any(c => c.StartDateTime.Value <= startTime && startTime < c.EndDateTime.Value))
+                        var eventRegisters = entity.EventRegisters.Where(c=>c.StartDateTime == startTime).ToList();
+                        var numOfPlayerAvailable = item.NumberOfPlayer1Time - eventRegisters.Sum(c => c.NumberOfPlayer1Time);
+                        if(numOfPlayerAvailable > 0)
                         {
                             item.TimeAvailableToPlay = startTime;
+                            item.NumberOfPlayer1Time = numOfPlayerAvailable;
                             break;
                         }
                         startTime = startTime.AddMinutes(item.TimeToPlayPerSession.Value);
@@ -79,16 +82,13 @@ namespace EventManager.BusinessService
                 {
                     return false;
                 }
-                else if(entity.EventRegisters.Any(c=> 
-                                                (c.StartDateTime >= model.StartDateTime && c.StartDateTime < model.EndDateTime)
-                                                ||
-                                                (c.EndDateTime >= model.EndDateTime && c.EndDateTime >= model.StartDateTime)
-                                                ))
+                else
                 {
-                    return false;
+                    var eventRegisters = entity.EventRegisters.Where(c => c.StartDateTime == model.StartDateTime).ToList();
+                    var numOfPlayerAvailable = entity.NumberOfPlayer1Time - eventRegisters.Sum(c => c.NumberOfPlayer1Time);                    
+                    return numOfPlayerAvailable > 0;
                 }
             }
-            return true;
         }
 
         public bool RegisterEvent(ApiEventRegisterModel model)
@@ -97,11 +97,11 @@ namespace EventManager.BusinessService
             if (valid)
             {
                 EventRegister entity = new EventRegister();
-                entity.Status = (int)eEventRegisterStatus.New;
-                entity.EndDateTime = model.EndDateTime;
+                entity.Status = (int)eEventRegisterStatus.New;                
                 entity.EventCampaignID = model.EventCampaignID;
                 entity.NumberOfPlayer1Time = model.NumberOfPlayer1Time;
                 entity.StartDateTime = model.StartDateTime;
+                entity.EndDateTime = model.StartDateTime.AddMinutes(model.TimeToPlayPerSession);
                 entity.TimeToPlayPerSession = model.TimeToPlayPerSession;
                 entity.UserId = model.UserId.ToString();
                 entity.Active = true;
