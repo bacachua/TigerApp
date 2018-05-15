@@ -40,11 +40,7 @@ namespace EventManager.BusinessService
             {
                 _repository = new Repository<EventCampaign>(context, unitOfWork);                
                 var currentTime = DateTime.Now;
-<<<<<<< .mine
-                var entities = _repository.AllIncluding(c => c.City, c => c.Event, c=>c.EventRegisters).Where(c => c.StartDateTime >= currentTime || c.EndDateTime > currentTime).OrderBy(c => c.EventCampaignID).OrderBy(c => c.StartDateTime).ToList();
-=======
-                var entities = _repository.AllIncluding(c => c.City, c => c.Event, c => c.EventRegisters).Where(c => c.StartDateTime >= currentTime).OrderBy(c => c.EventCampaignID).OrderBy(c => c.StartDateTime).ToList();
->>>>>>> .theirs
+                var entities = _repository.AllIncluding(c => c.City, c => c.Event, c => c.EventRegisters).Where(c => c.StartDateTime >= currentTime || c.EndDateTime > currentTime).OrderBy(c => c.EventCampaignID).OrderBy(c => c.StartDateTime).ToList();
                 models = entities.Select(c => new ApiEventCampaignModel()
                 {
                     EventCampaignID = c.EventCampaignID,
