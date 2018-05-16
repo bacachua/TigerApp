@@ -13,7 +13,7 @@ using Repository.Pattern.DataContext;
 using Repository.Pattern.UnitOfWork;
 using Repository.Pattern.Ef6;
 using System.Linq.Expressions;
-using LinqKit;
+
 using Repository.Pattern.Infrastructure;
 
 namespace EventManager.BusinessService
@@ -129,7 +129,7 @@ namespace EventManager.BusinessService
             var compareDate = currentDate.AddMinutes(numOfMinute);
 
             Expression<Func<EventRegister, bool>> filter = c => true;
-            if (status == (int)eEventRegisterStatus.Reminded)
+            /*if (status == (int)eEventRegisterStatus.Reminded)
             {
                 filter = filter.And(c => c.Status == (int)eEventRegisterStatus.New && c.StartDateTime > currentDate && c.StartDateTime <= compareDate);
             }
@@ -140,7 +140,7 @@ namespace EventManager.BusinessService
                                         &&
                                         compareDate > c.StartDateTime
                                         );
-            }
+            }*/
             using (IDataContextAsync context = new GameManagerContext())
             using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
             {
