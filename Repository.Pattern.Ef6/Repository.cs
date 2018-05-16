@@ -273,12 +273,12 @@ namespace Repository.Pattern.Ef6
         }
         public IQueryable<TEntity> AllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = _dbSet.AsNoTracking();
+            IQueryable<TEntity> query = _dbSet;
             foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
             }
-            return query;
+            return query.AsNoTracking().AsExpandable();
         }
         public virtual IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> predicate)
         {

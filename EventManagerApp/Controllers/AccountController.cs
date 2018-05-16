@@ -25,8 +25,6 @@ using Repository.Pattern.Repositories;
 using EventManager.BusinessService;
 using System.Data.Entity.Validation;
 using System.Linq;
-using EventManager.ApiModels;
-
 
 namespace EventManager.Web.Controllers
 {
@@ -76,37 +74,6 @@ namespace EventManager.Web.Controllers
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
         }
-
-		[AllowAnonymous]
-		[HttpPost]
-		[Route("AccountById")]
-		public APIResponse GetUserInfo(string userId)
-		{
-			using (IDataContextAsync context = new GameManagerContext())
-			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
-			{
-				IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
-				AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
-				var result = AccountBusinessServiceService.GetUserInfo(userId);
-				return new APIResponse() { Status = eResponseStatus.Success, Result = result };
-			}
-			
-			
-		}
-
-		[HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-		[Route("UserInfoById")]
-		public UserInfoViewModel GetUserInfoById(string userId)
-		{
-			ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
-			return new UserInfoViewModel
-			{
-				Email = User.Identity.GetUserName(),
-				HasRegistered = externalLogin == null,
-				LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
-			};
-		}
 
         // POST api/Account/Logout
         [Route("Logout")]
@@ -432,7 +399,7 @@ namespace EventManager.Web.Controllers
 				using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
 				{
 					IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
-					AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+					AccountBusinessServiceService AccountBusinessServiceService = new AccountBusinessServiceService(customerRepository);
 					
 					aspNetUser = customerRepository.Queryable().Where(x => x.Id == model.Id).SingleOrDefault<AspNetUser>();
 					aspNetUser.ObjectState = ObjectState.Modified;
