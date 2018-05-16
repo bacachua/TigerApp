@@ -12,19 +12,19 @@ using EventManager.ApiModels;
 using Repository.Pattern.DataContext;
 using Repository.Pattern.UnitOfWork;
 using Repository.Pattern.Ef6;
-
+using EventManager.ApiModels;
 
 namespace EventManager.BusinessService
 {
-	public interface IAccountBusinessServiceService : IService<AspNetUser>
+	public interface IAccountBusinessService : IService<AspNetUser>
 	{
 		ApiAccountModel GetAccountInfo(string userId);
 	}
 
-	public class AccountBusinessServiceService : Service<AspNetUser>, IAccountBusinessServiceService
+	public class AccountBusinessService : Service<AspNetUser>, IAccountBusinessService
 	{
 		private readonly IRepositoryAsync<AspNetUser> _repository;
-		public AccountBusinessServiceService(IRepositoryAsync<AspNetUser> repository)
+		public AccountBusinessService(IRepositoryAsync<AspNetUser> repository)
 			: base(repository)
 		{
 			_repository = repository;

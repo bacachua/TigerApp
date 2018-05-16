@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiAccountModel.cs" />
     <Compile Include="ApiEventCampaignModel.cs" />
     <Compile Include="ApiEventRegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
