@@ -25,6 +25,7 @@ using Repository.Pattern.Repositories;
 using EventManager.BusinessService;
 using System.Data.Entity.Validation;
 using System.Linq;
+using EventManager.ApiModels;
 
 namespace EventManager.Web.Controllers
 {
@@ -74,6 +75,31 @@ namespace EventManager.Web.Controllers
                 LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
             };
         }
+
+		// GET api/Account/UserInfo
+		[AllowAnonymous]
+		[Route("GetUserInfo")]
+		public ApiAccountModel GetUserInfo(string userid)
+		{
+			ApiAccountModel apiAccountModel = null;
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
+				AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+				var aspUsr = AccountBusinessServiceService.GetAccountInfo(userid);
+				apiAccountModel = new ApiAccountModel();
+				apiAccountModel.Id = aspUsr.Id;
+				apiAccountModel.Email = aspUsr.Email;
+				apiAccountModel.FirstName = aspUsr.FirstName;
+				apiAccountModel.LastName = aspUsr.LastName;
+				apiAccountModel.BirthDate = aspUsr.BirthDate;
+				apiAccountModel.PhoneNumber = apiAccountModel.PhoneNumber;
+				apiAccountModel.Address = apiAccountModel.Address;
+				apiAccountModel.CityId = apiAccountModel.CityId;
+			}
+			return apiAccountModel;			
+		}
 
         // POST api/Account/Logout
         [Route("Logout")]
@@ -389,7 +415,7 @@ namespace EventManager.Web.Controllers
 
 		private Tuple<bool, string> UpdateUserInfo(RegisterBindingModel model)
 		{
-			 Tuple<bool, string> ret = new Tuple<bool,string>(true,"Success");
+			Tuple<bool, string> ret = new Tuple<bool,string>(true,"Success");
 			try
 			{
 				// TODO: Add update logic here
