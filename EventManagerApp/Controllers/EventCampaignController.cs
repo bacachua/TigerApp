@@ -73,5 +73,14 @@ namespace EventManager.Web.Controllers
 			var result = eVentCampaignSrv.GetListByCity(cityId);
 			return new APIResponse() { Status = eResponseStatus.Success, Result = result };
 		}
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/EventCampaign/GetEventRegisterByQRCode/{qrCode}")]
+        public APIResponse GetEventRegisterByQRCode(string qrCode)
+        {
+            IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
+            var result = eVentCampaignSrv.GetEventRegisterByQRCode(qrCode);
+            return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+        }        
     }
 }

@@ -21,10 +21,10 @@ namespace EventManager.BusinessService
 		ApiAccountModel GetAccountInfo(string userId);
 	}
 
-	public class AccountBusinessService : Service<AspNetUser>, IAccountBusinessServiceService
+	public class AccountBusinessServiceService : Service<AspNetUser>, IAccountBusinessServiceService
 	{
 		private readonly IRepositoryAsync<AspNetUser> _repository;
-		public AccountBusinessService(IRepositoryAsync<AspNetUser> repository)
+		public AccountBusinessServiceService(IRepositoryAsync<AspNetUser> repository)
 			: base(repository)
 		{
 			_repository = repository;

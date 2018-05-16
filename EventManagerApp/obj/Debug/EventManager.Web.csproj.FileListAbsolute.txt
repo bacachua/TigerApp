@@ -378,6 +378,7 @@ D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\EventManager.Web.pdb
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\Antlr3.Runtime.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\EntityFramework.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\EntityFramework.SqlServer.dll
+D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\EventManager.ApiModels.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\EventManager.BusinessService.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\EventManager.DataModel.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\EventManager.Repository.dll
@@ -418,6 +419,7 @@ D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\WebActivatorEx.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\WebGrease.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\LinqKit.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\Microsoft.Practices.ServiceLocation.dll
+D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\EventManager.ApiModels.pdb
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\EventManager.BusinessService.pdb
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\EventManager.DataModel.pdb
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManagerApp\bin\EventManager.Repository.pdb

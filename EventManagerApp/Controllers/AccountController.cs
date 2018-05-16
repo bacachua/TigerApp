@@ -425,7 +425,7 @@ namespace EventManager.Web.Controllers
 				using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
 				{
 					IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
-					AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+					AccountBusinessServiceService AccountBusinessServiceService = new AccountBusinessServiceService(customerRepository);
 					
 					aspNetUser = customerRepository.Queryable().Where(x => x.Id == model.Id).SingleOrDefault<AspNetUser>();
 					aspNetUser.ObjectState = ObjectState.Modified;

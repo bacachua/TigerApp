@@ -291,6 +291,5 @@ D:\UniWin\QuanLyTroChoi\Src\TigerApp\Repository.Pattern\bin\Debug\ko\System.Spat
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\Repository.Pattern\bin\Debug\ru\System.Spatial.resources.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\Repository.Pattern\bin\Debug\zh-Hans\System.Spatial.resources.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\Repository.Pattern\bin\Debug\zh-Hant\System.Spatial.resources.dll
-D:\UniWin\QuanLyTroChoi\Src\TigerApp\Repository.Pattern\obj\Debug\Repository.Pattern.csprojResolveAssemblyReference.cache
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\Repository.Pattern\obj\Debug\Repository.Pattern.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\Repository.Pattern\obj\Debug\Repository.Pattern.pdb

@@ -25,6 +25,7 @@ namespace EventManager.BusinessService
         bool RegisterEvent(ApiEventRegisterModel model);
 		List<ApiEventCampaignModel> GetListByCity(int cityid);
         void SendNotificationBeforeOrLateEventTime(int numOfMinute, string _serverKey, string _senderId, string to, string title, string body, int status);
+		List<ApiEventRegisterUserModel> GetEventRegisterByQRCode(string qrCode);
     }
 
     public class EventCampaignBusinessService : IEventCampaignBusinessService
@@ -122,25 +123,12 @@ namespace EventManager.BusinessService
             }
             return valid;
         }
-
         public void SendNotificationBeforeOrLateEventTime(int numOfMinute, string _serverKey, string _senderId, string to, string title, string body, int status)
         {
             var currentDate = DateTime.Now;
             var compareDate = currentDate.AddMinutes(numOfMinute);
 
             Expression<Func<EventRegister, bool>> filter = c => true;
-            /*if (status == (int)eEventRegisterStatus.Reminded)
-            {
-                filter = filter.And(c => c.Status == (int)eEventRegisterStatus.New && c.StartDateTime > currentDate && c.StartDateTime <= compareDate);
-            }
-            else//late
-            {
-                filter = filter.And(c =>
-                                        (c.Status == (int)eEventRegisterStatus.New || c.Status == (int)eEventRegisterStatus.Reminded)
-                                        &&
-                                        compareDate > c.StartDateTime
-                                        );
-            }*/
             using (IDataContextAsync context = new GameManagerContext())
             using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
             {
@@ -160,8 +148,6 @@ namespace EventManager.BusinessService
                 }
             }
         }
-
-
         public List<ApiEventCampaignModel> GetListByCity(int cityid)
 		{
 			List<ApiEventCampaignModel> models = new List<ApiEventCampaignModel>();
@@ -198,5 +184,27 @@ namespace EventManager.BusinessService
 			}
 			return models;
 		}
+        public List<ApiEventRegisterUserModel> GetEventRegisterByQRCode(string qrCode)
+        {
+            using (IDataContextAsync context = new GameManagerContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            {
+                _eventRegisterRepo = new Repository<EventRegister>(context, unitOfWork);
+                var model = _eventRegisterRepo.Queryable().Where(c => c.AspNetUser.QRCode == qrCode).OrderByDescending(c => c.StartDateTime).Select(c => new ApiEventRegisterUserModel()
+                {
+                    EventRegisterID = c.EventRegisterID,
+                    StartDateTime = c.StartDateTime.Value,
+                    EndDateTime = c.EndDateTime.Value,
+                    TimeToPlayPerSession = c.TimeToPlayPerSession.Value,
+                    NumberOfPlayer1Time = c.NumberOfPlayer1Time.Value,
+                    Active = c.Active,
+                    EventCampaignID = c.EventCampaignID.Value,
+                    EventName = c.EventCampaign.Event.Name,
+                    CityName = c.EventCampaign.City.Name,
+                    Status = c.Status
+                }).ToList();
+                return model;
+            }
+        }
     }
 }

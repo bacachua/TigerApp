@@ -18,6 +18,12 @@ namespace EventManager.ApiModels
         public int EventCampaignID { get; set; }
         public int Status { get; set; }
     }
+    public class ApiEventRegisterUserModel: ApiEventRegisterModel
+    {
+        public string EventName { get; set; }
+        public string CityName { get; set; }
+        public string StatusName { get { return Enum.GetName(typeof(eEventRegisterStatus), Status); } }
+    }
     public enum eEventRegisterStatus: int
     {
         New = 0,
