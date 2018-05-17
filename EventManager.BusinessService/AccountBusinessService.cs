@@ -47,6 +47,10 @@ namespace EventManager.BusinessService
 				model.CityId = uAccount.CityId;
 				model.BirthDate = uAccount.BirthDate;
 				model.Address = uAccount.Address;
+				model.QRCode = uAccount.QRCode;
+				model.PasswordHash = uAccount.PasswordHash;
+				model.DeviceId = uAccount.DeviceId;
+				model.IdentityNumber = uAccount.IdentityNumber;
 			}
 			return model;
 		}
