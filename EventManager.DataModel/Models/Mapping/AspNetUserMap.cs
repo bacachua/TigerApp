@@ -97,6 +97,7 @@ namespace EventManager.DataModel.Models.Mapping
             this.Property(t => t.CityId).HasColumnName("CityId");
             this.Property(t => t.QRCode).HasColumnName("QRCode");
             this.Property(t => t.Comment).HasColumnName("Comment");
+            this.Property(t => t.SignatureImgPath).HasColumnName("SignatureImgPath");
 
             // Relationships
             this.HasMany(t => t.AspNetRoles)
