@@ -13,7 +13,8 @@ using Repository.Pattern.DataContext;
 using Repository.Pattern.UnitOfWork;
 using Repository.Pattern.Ef6;
 using System.Linq.Expressions;
-
+using System.IO;
+using System.Globalization;
 using Repository.Pattern.Infrastructure;
 
 namespace EventManager.BusinessService
