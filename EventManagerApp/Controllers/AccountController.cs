@@ -348,28 +348,33 @@ namespace EventManager.Web.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+		public APIResponse Register(RegisterBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+			if (!ModelState.IsValid)
+			{
+			
+				return new APIResponse() { Status = eResponseStatus.Success, Result ="Invalid Model" };
+			}
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            IdentityResult result =  UserManager.Create(user, model.Password);
 			model.Id = user.Id;
 			model.UserName = user.UserName;
 			model.SecurityStamp = user.SecurityStamp;
 			model.PasswordHash = user.PasswordHash;
 			Tuple<bool, string> updateResult = UpdateUserInfo(model);
+			if (!result.Succeeded)
+			{
+				return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+			}
+			return new APIResponse() { Status = eResponseStatus.Success, Result = "Account succeffully Regirstered " };
+			//if (!result.Succeeded)
+			//{
+			//	return GetErrorResult(result);
+			//}
 
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            return Ok();
+			//return Ok();
         }
 
         // POST api/Account/RegisterExternal
@@ -404,6 +409,15 @@ namespace EventManager.Web.Controllers
             }
             return Ok();
         }
+
+
+		// PUT: api/EventRegister/5
+		public APIResponse Put(RegisterBindingModel model)
+		{
+			Tuple<bool, string> ret = UpdateUserInfo(model);
+			return new APIResponse() { Status = eResponseStatus.Success, Result = ret.Item1 };
+		}
+
 
 		private Tuple<bool, string> UpdateUserInfo(RegisterBindingModel model)
 		{

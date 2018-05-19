@@ -160,6 +160,7 @@ namespace EventManager.BusinessService
 				models = entities.Select(c => new ApiEventCampaignModel()
 				{
 					EventCampaignID = c.EventCampaignID,
+					EventID = c.EventID,
 					EventName = c.Event.Name,
 					CityName = c.City.Name,
 					StartDateTime = c.StartDateTime,

@@ -9,6 +9,7 @@ namespace EventManager.ApiModels
     public class ApiEventCampaignModel
     {
         public int EventCampaignID { get; set; }
+		public int EventID { get; set; }
         public string EventName { get; set; }
         public string CityName { get; set; }
         public Nullable<System.DateTime> StartDateTime { get; set; }

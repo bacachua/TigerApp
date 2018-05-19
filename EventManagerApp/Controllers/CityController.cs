@@ -21,6 +21,7 @@ using EventManager.Web.Models;
 using System.Net.Http;
 using System.Web.Http;
 using JsonApiSerializer;
+using EventManager.ApiModels;
 
 
 namespace EventManager.Web.Controllers
@@ -31,8 +32,7 @@ namespace EventManager.Web.Controllers
         // GET: api/City
 		[AllowAnonymous]
 		[HttpGet]
-
-		public HttpResponseMessage Get()
+		public APIResponse Get()
         {
 			List<CityModel> cities = null;
 			using (IDataContextAsync context = new GameManagerContext())
@@ -42,60 +42,78 @@ namespace EventManager.Web.Controllers
 				ICityBusinessService billingService = new CityBusinessService(campaignRepository);
 
 				IQueryFluent<City> q = campaignRepository.Query(x => x.CityID > 0);
-				cities = q.Select(y => new CityModel { CityID = y.CityID, Name = y.Name }).ToList();
+				cities = q.Select(y => new CityModel { CityID = y.CityID, Name = y.Name}).ToList();
 				//eventCampaignList = q.SelectAsync().Result.ToList();
 				//(t => new EventCampaignModel { EventCampaignID  = q.EventCampaignID});
 
 				//eventCampaignList = asyncTask.Result.Select( new EventCampaignModel{ }};
-
-				if (cities == null)
+				foreach (var c in cities)
 				{
-					var myError = new Error
-					{
-						Status = Resources.ApiMsg.Failed,
-						Message = Resources.ApiMsg.NoRecordFound
-					};
 					
-					return Request.CreateResponse(HttpStatusCode.OK, myError);
-					//throw new HttpResponseException(HttpStatusCode.NotFound);
+					IEventCampaignBusinessService evtCampaignBusinessService = new EventCampaignBusinessService();
+					List<ApiEventCampaignModel> evtList = evtCampaignBusinessService.GetListByCity(c.CityID);
+					if (evtList != null && (evtList.Count > 0))
+					{
+						if(evtList.Count >1 )
+						{
+							c.StartDate = evtList[0].StartDateTime;
+							c.EndDate = evtList[evtList.Count-1].EndDateTime;
+						}
+						else
+						{
+							c.StartDate = evtList[0].StartDateTime;
+							c.EndDate = evtList[0].EndDateTime;
+						}
+					}
+
 				}
-				else
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, cities);
-				}
+
+				return new APIResponse() { Status = eResponseStatus.Success, Result = cities.ToList() };				
 			}
         }
+			
 
         // GET: api/City/5
-		public HttpResponseMessage Get(int id)
+		[AllowAnonymous]
+		[HttpGet]
+		[Route("api/City/Get/{cityId}")]
+		public APIResponse Get(int cityId)
         {
-			CityModel eventCampaignList = null;
+			List<CityModel> cities = null;
 			using (IDataContextAsync context = new GameManagerContext())
 			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
 			{
 				IRepositoryAsync<City> campaignRepository = new Repository<City>(context, unitOfWork);
 				ICityBusinessService billingService = new CityBusinessService(campaignRepository);
 
-				IQueryFluent<City> q = campaignRepository.Query(x => x.CityID == id);
-				eventCampaignList = q.Select(y => new CityModel { CityID = y.CityID, Name = y.Name }).FirstOrDefault();
-				
-				if (eventCampaignList == null)
+				IQueryFluent<City> q = campaignRepository.Query(x => x.CityID == cityId);
+				cities = q.Select(y => new CityModel { CityID = y.CityID, Name = y.Name }).ToList();
+
+				foreach (var c in cities)
 				{
-					var myError = new Error
+
+					IEventCampaignBusinessService evtCampaignBusinessService = new EventCampaignBusinessService();
+					List<ApiEventCampaignModel> evtList = evtCampaignBusinessService.GetListByCity(c.CityID);
+					if (evtList != null && (evtList.Count > 0))
 					{
-						Status = Resources.ApiMsg.Failed,
-						Message = Resources.ApiMsg.NoRecordFound
-					};
-					return Request.CreateResponse(HttpStatusCode.OK, myError);
-					//throw new HttpResponseException(HttpStatusCode.NotFound);
-				}
-				else
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, eventCampaignList);
+						if (evtList.Count > 1)
+						{
+							c.StartDate = evtList[0].StartDateTime;
+							c.EndDate = evtList[evtList.Count - 1].EndDateTime;
+						}
+						else
+						{
+							c.StartDate = evtList[0].StartDateTime;
+							c.EndDate = evtList[0].EndDateTime;
+						}
+					}
+
 				}
 			}
-        }
 
+			return new APIResponse() { Status = eResponseStatus.Success, Result = cities.ToList() };	
+        }
+		
         // POST: api/City
         public void Post([FromBody]string value)
         {
