@@ -350,28 +350,33 @@ namespace EventManager.Web.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+		public APIResponse Register(RegisterBindingModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+			if (!ModelState.IsValid)
+			{
+			
+				return new APIResponse() { Status = eResponseStatus.Success, Result ="Invalid Model" };
+			}
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            IdentityResult result =  UserManager.Create(user, model.Password);
             model.Id = user.Id;
             model.UserName = user.UserName;
             model.SecurityStamp = user.SecurityStamp;
             model.PasswordHash = user.PasswordHash;
             Tuple<bool, string> updateResult = UpdateUserInfo(model);
+			if (!result.Succeeded)
+			{
+				return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+			}
+			return new APIResponse() { Status = eResponseStatus.Success, Result = "Account succeffully Regirstered " };
+			//if (!result.Succeeded)
+			//{
+			//	return GetErrorResult(result);
+			//}
 
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            return Ok();
+			//return Ok();
         }
 
         // POST api/Account/RegisterExternal
@@ -407,49 +412,56 @@ namespace EventManager.Web.Controllers
             return Ok();
         }
 
-        private Tuple<bool, string> UpdateUserInfo(RegisterBindingModel model)
-        {
-            Tuple<bool, string> ret = new Tuple<bool, string>(true, "Success");
-            try
-            {
-                // TODO: Add update logic here
-                AspNetUser aspNetUser = new AspNetUser();
+		// PUT: api/EventRegister/5
+		public APIResponse Put(RegisterBindingModel model)
+		{
+			Tuple<bool, string> ret = UpdateUserInfo(model);
+			return new APIResponse() { Status = eResponseStatus.Success, Result = ret.Item1 };
+		}
 
-                using (IDataContextAsync context = new GameManagerContext())
-                using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
-                {
-                    IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
-                    AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
-
-                    aspNetUser = customerRepository.Queryable().Where(x => x.Id == model.Id).SingleOrDefault<AspNetUser>();
-                    aspNetUser.ObjectState = ObjectState.Modified;
-                    aspNetUser.Id = model.Id;
-                    aspNetUser.BirthDate = model.BirthDate;
-                    aspNetUser.Email = model.Email;
-                    aspNetUser.CityId = model.CityId;
-                    aspNetUser.FullName = model.FullName;
-                    aspNetUser.FirstName = model.FirstName;
-                    aspNetUser.LastName = model.LastName;
-                    aspNetUser.QRCode = model.QRCode;
-                    aspNetUser.BirthDate = model.BirthDate;
-                    aspNetUser.PhoneNumber = model.PhoneNumber;
-                    aspNetUser.Address = model.Address;
-                    aspNetUser.UserName = model.UserName;
-
-                    customerRepository.InsertOrUpdateGraph(aspNetUser);
-                    unitOfWork.SaveChanges();
-                }
-            }
-            catch (DbEntityValidationException ex)
-            {
-                ret = new Tuple<bool, string>(false, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                ret = new Tuple<bool, string>(false, ex.Message);
-            }
-            return ret;
-        }
+		private Tuple<bool, string> UpdateUserInfo(RegisterBindingModel model)
+		{
+			Tuple<bool, string> ret = new Tuple<bool,string>(true,"Success");
+			try
+			{
+				// TODO: Add update logic here
+				AspNetUser aspNetUser = new AspNetUser();
+				
+				using (IDataContextAsync context = new GameManagerContext())
+				using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+				{
+					IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
+					AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+					
+					aspNetUser = customerRepository.Queryable().Where(x => x.Id == model.Id).SingleOrDefault<AspNetUser>();
+					aspNetUser.ObjectState = ObjectState.Modified;
+					aspNetUser.Id = model.Id;
+					aspNetUser.BirthDate = model.BirthDate;
+					aspNetUser.Email = model.Email;
+					aspNetUser.CityId = model.CityId;
+					aspNetUser.FullName = model.FullName;
+					aspNetUser.FirstName = model.FirstName;
+					aspNetUser.LastName = model.LastName;
+					aspNetUser.QRCode = model.QRCode;
+					aspNetUser.BirthDate = model.BirthDate;
+					aspNetUser.PhoneNumber = model.PhoneNumber;
+					aspNetUser.Address = model.Address;
+					aspNetUser.UserName = model.UserName;
+					
+					customerRepository.InsertOrUpdateGraph(aspNetUser);
+					unitOfWork.SaveChanges();
+				}
+			}
+			catch (DbEntityValidationException ex)
+			{
+				ret = new Tuple<bool, string>(false, ex.Message);
+			}
+			catch (Exception ex)
+			{			
+				ret = new Tuple<bool, string>(false, ex.Message);
+			}		
+			return ret;
+		}
         protected override void Dispose(bool disposing)
         {
             if (disposing)
