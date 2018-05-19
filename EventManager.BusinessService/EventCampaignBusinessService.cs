@@ -25,7 +25,7 @@ namespace EventManager.BusinessService
         bool RegisterEvent(ApiEventRegisterModel model);
 		List<ApiEventCampaignModel> GetListByCity(int cityid);
         void SendNotificationBeforeOrLateEventTime(int numOfMinute, string _serverKey, string _senderId, string to, string title, string body, int status);
-		List<ApiEventRegisterUserModel> GetEventRegisterByQRCode(string qrCode);
+		List<ApiEventRegisterUserModel> GetEventRegisterByQRCode(string qrCode);        
     }
 
     public class EventCampaignBusinessService : IEventCampaignBusinessService
@@ -205,6 +205,6 @@ namespace EventManager.BusinessService
                 }).ToList();
                 return model;
             }
-        }
+        }        
     }
 }

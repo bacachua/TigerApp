@@ -26,6 +26,8 @@ using EventManager.BusinessService;
 using System.Data.Entity.Validation;
 using System.Linq;
 using EventManager.ApiModels;
+using System.Drawing;
+using System.IO;
 
 namespace EventManager.Web.Controllers
 {
@@ -76,22 +78,22 @@ namespace EventManager.Web.Controllers
             };
         }
 
-		// GET api/Account/UserInfo
-		[Authorize]
-		[Route("GetUserInfo")]
-		public ApiAccountModel GetUserInfo(string userid)
-		{
-			
-			using (IDataContextAsync context = new GameManagerContext())
-			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
-			{
-				IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
-				AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
-				return AccountBusinessServiceService.GetAccountInfo(userid);
-				
-			}
-				
-		}
+        // GET api/Account/UserInfo
+        [Authorize]
+        [Route("GetUserInfo")]
+        public ApiAccountModel GetUserInfo(string userid)
+        {
+
+            using (IDataContextAsync context = new GameManagerContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            {
+                IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
+                AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+                return AccountBusinessServiceService.GetAccountInfo(userid);
+
+            }
+
+        }
 
         // POST api/Account/Logout
         [Route("Logout")]
@@ -152,7 +154,7 @@ namespace EventManager.Web.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -285,9 +287,9 @@ namespace EventManager.Web.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -358,11 +360,11 @@ namespace EventManager.Web.Controllers
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-			model.Id = user.Id;
-			model.UserName = user.UserName;
-			model.SecurityStamp = user.SecurityStamp;
-			model.PasswordHash = user.PasswordHash;
-			Tuple<bool, string> updateResult = UpdateUserInfo(model);
+            model.Id = user.Id;
+            model.UserName = user.UserName;
+            model.SecurityStamp = user.SecurityStamp;
+            model.PasswordHash = user.PasswordHash;
+            Tuple<bool, string> updateResult = UpdateUserInfo(model);
 
             if (!result.Succeeded)
             {
@@ -400,54 +402,54 @@ namespace EventManager.Web.Controllers
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }
 
-		private Tuple<bool, string> UpdateUserInfo(RegisterBindingModel model)
-		{
-			Tuple<bool, string> ret = new Tuple<bool,string>(true,"Success");
-			try
-			{
-				// TODO: Add update logic here
-				AspNetUser aspNetUser = new AspNetUser();
-				
-				using (IDataContextAsync context = new GameManagerContext())
-				using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
-				{
-					IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
-					AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
-					
-					aspNetUser = customerRepository.Queryable().Where(x => x.Id == model.Id).SingleOrDefault<AspNetUser>();
-					aspNetUser.ObjectState = ObjectState.Modified;
-					aspNetUser.Id = model.Id;
-					aspNetUser.BirthDate = model.BirthDate;
-					aspNetUser.Email = model.Email;
-					aspNetUser.CityId = model.CityId;
-					aspNetUser.FullName = model.FullName;
-					aspNetUser.FirstName = model.FirstName;
-					aspNetUser.LastName = model.LastName;
-					aspNetUser.QRCode = model.QRCode;
-					aspNetUser.BirthDate = model.BirthDate;
-					aspNetUser.PhoneNumber = model.PhoneNumber;
-					aspNetUser.Address = model.Address;
-					aspNetUser.UserName = model.UserName;
-					
-					customerRepository.InsertOrUpdateGraph(aspNetUser);
-					unitOfWork.SaveChanges();
-				}
-			}
-			catch (DbEntityValidationException ex)
-			{
-				ret = new Tuple<bool, string>(false, ex.Message);
-			}
-			catch (Exception ex)
-			{			
-				ret = new Tuple<bool, string>(false, ex.Message);
-			}		
-			return ret;
-		}
+        private Tuple<bool, string> UpdateUserInfo(RegisterBindingModel model)
+        {
+            Tuple<bool, string> ret = new Tuple<bool, string>(true, "Success");
+            try
+            {
+                // TODO: Add update logic here
+                AspNetUser aspNetUser = new AspNetUser();
+
+                using (IDataContextAsync context = new GameManagerContext())
+                using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+                {
+                    IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
+                    AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+
+                    aspNetUser = customerRepository.Queryable().Where(x => x.Id == model.Id).SingleOrDefault<AspNetUser>();
+                    aspNetUser.ObjectState = ObjectState.Modified;
+                    aspNetUser.Id = model.Id;
+                    aspNetUser.BirthDate = model.BirthDate;
+                    aspNetUser.Email = model.Email;
+                    aspNetUser.CityId = model.CityId;
+                    aspNetUser.FullName = model.FullName;
+                    aspNetUser.FirstName = model.FirstName;
+                    aspNetUser.LastName = model.LastName;
+                    aspNetUser.QRCode = model.QRCode;
+                    aspNetUser.BirthDate = model.BirthDate;
+                    aspNetUser.PhoneNumber = model.PhoneNumber;
+                    aspNetUser.Address = model.Address;
+                    aspNetUser.UserName = model.UserName;
+
+                    customerRepository.InsertOrUpdateGraph(aspNetUser);
+                    unitOfWork.SaveChanges();
+                }
+            }
+            catch (DbEntityValidationException ex)
+            {
+                ret = new Tuple<bool, string>(false, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                ret = new Tuple<bool, string>(false, ex.Message);
+            }
+            return ret;
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -564,5 +566,45 @@ namespace EventManager.Web.Controllers
         }
 
         #endregion
+
+        [Route("PostSignatureImage")]
+        [AllowAnonymous]
+        public APIResponse PostSignatureImage()
+        {
+            try
+            {
+                eResponseStatus status = eResponseStatus.Success;
+                var httpPostedFile = HttpContext.Current.Request.Files[0];
+                var filePath = "Images/" + new Random().Next().ToString() + httpPostedFile.FileName;
+                if (httpPostedFile != null)
+                {
+                    var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/"), filePath);
+                    httpPostedFile.SaveAs(fileSavePath);
+                }
+
+                IUserService user = new UserService();
+                var userId = HttpContext.Current.Request.Params["UserId"].ToString();
+                user.SaveSignatureImage(userId, filePath);
+
+                return new APIResponse() { Status = status, Result = filePath };
+            }
+            catch (Exception ex)
+            {
+                return new APIResponse() { Status = eResponseStatus.Fail, Message = "Please Upload image of type .jpg,.gif,.png." };
+            }
+        }
+        [Route("PostTest")]
+        [AllowAnonymous]
+        public APIResponse PostTest()
+        {
+            var httpPostedFile = HttpContext.Current.Request.Files["UploadedImage"];
+            if (httpPostedFile != null)
+            {
+                var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/Images"), httpPostedFile.FileName);
+                httpPostedFile.SaveAs(fileSavePath);
+            }
+            var userId = HttpContext.Current.Request.Params["UserId"].ToString();
+            return new APIResponse();
+        }
     }
 }

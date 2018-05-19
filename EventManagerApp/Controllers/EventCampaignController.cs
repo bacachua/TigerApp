@@ -20,6 +20,8 @@ using System.IO;
 using EventManager.Web.Models;
 using EventManager.ApiModels;
 using System.Web;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace EventManager.Web.Controllers
 {
@@ -82,48 +84,6 @@ namespace EventManager.Web.Controllers
             IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
             var result = eVentCampaignSrv.GetEventRegisterByQRCode(qrCode);
             return new APIResponse() { Status = eResponseStatus.Success, Result = result };
-        }
-
-        [Route("api/EventCampaign/PostSignatureImage")]
-        [AllowAnonymous]
-        public APIResponse PostSignatureImage()
-        {
-            var filePath = HttpContext.Current.Server.MapPath("~/SignatureImages/");
-            string message = "";
-            eResponseStatus status = eResponseStatus.Success;
-            try
-            {                
-                var httpRequest = HttpContext.Current.Request;
-                var postedFile = httpRequest.Files[0];
-                if (postedFile != null && postedFile.ContentLength > 0)
-                {
-                    int MaxContentLength = 1024 * 1024 * 1; //Size = 1 MB
-                    IList<string> AllowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
-                    var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
-                    var extension = ext.ToLower();
-                    if (!AllowedFileExtensions.Contains(extension))
-                    {
-                        status = eResponseStatus.Fail;
-                        message = string.Format("Please Upload image of type .jpg,.gif,.png.");
-                    }
-                    else if (postedFile.ContentLength > MaxContentLength)
-                    {
-                        status = eResponseStatus.Fail;
-                        message = string.Format("Please Upload a file upto 1 mb.");
-                    }
-                    else
-                    {
-                        filePath = filePath + postedFile.FileName + extension;
-                        postedFile.SaveAs(filePath);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                status = eResponseStatus.Fail;
-                message = ex.Message;
-            }
-            return new APIResponse() { Status = status, Message = message, Result = filePath };
-        }
+        }        
     }
 }
