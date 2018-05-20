@@ -37,7 +37,7 @@ namespace EventManager.ApiModels
 		public Nullable<int> CityId { get; set; }
 		public string QRCode { get; set; }
 		public string Comment { get; set; }
-		public string SignatureImgPath { get; set; }
+
 		public string DeviceId { get; set; }
 	}
 }

@@ -25,17 +25,4 @@ namespace EventManager.Web.Models
 		public string CityName { get; set; }
 		public DateTime TimeToPlay { get; set; }
 	}
-
-	public class EventCampaignByCityEventPeriod
-	{
-		public EventCampaignByCityEventPeriod()
-		{
-
-		}
-		
-		public int CityID { get; set; }
-		public DateTime StartDateTime { get; set; }
-		public DateTime EndDateTime { get; set; }
-		
-	}
 }

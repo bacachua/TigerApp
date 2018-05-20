@@ -17,9 +17,4 @@ namespace EventManager.Web.Models
 		public Nullable<int> EventCampaignID { get; set; }
 		public int Status { get; set; }
 	}
-
-	public class EventRegisterStatusModel
-	{
-		public int EventRegisterID { get; set; }	
-	}
 }

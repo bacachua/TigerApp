@@ -21,19 +21,19 @@ using EventManager.Web.Models;
 using System.Net.Http;
 using System.Web.Http;
 using JsonApiSerializer;
-using EventManager.ApiModels;
 
 
 namespace EventManager.Web.Controllers
 {
 	[AllowAnonymous]
-	public class CityController : ApiController
-	{
-		// GET: api/City
+    public class CityController : ApiController
+    {
+        // GET: api/City
 		[AllowAnonymous]
 		[HttpGet]
-		public APIResponse Get()
-		{
+
+		public HttpResponseMessage Get()
+        {
 			List<CityModel> cities = null;
 			using (IDataContextAsync context = new GameManagerContext())
 			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
@@ -47,86 +47,68 @@ namespace EventManager.Web.Controllers
 				//(t => new EventCampaignModel { EventCampaignID  = q.EventCampaignID});
 
 				//eventCampaignList = asyncTask.Result.Select( new EventCampaignModel{ }};
-				foreach (var c in cities)
+
+				if (cities == null)
 				{
-
-					IEventCampaignBusinessService evtCampaignBusinessService = new EventCampaignBusinessService();
-					List<ApiEventCampaignModel> evtList = evtCampaignBusinessService.GetListByCity(c.CityID);
-					if (evtList != null && (evtList.Count > 0))
+					var myError = new Error
 					{
-						if (evtList.Count > 1)
-						{
-							c.StartDate = evtList[0].StartDateTime;
-							c.EndDate = evtList[evtList.Count - 1].EndDateTime;
-						}
-						else
-						{
-							c.StartDate = evtList[0].StartDateTime;
-							c.EndDate = evtList[0].EndDateTime;
-						}
-					}
-
+						Status = Resources.ApiMsg.Failed,
+						Message = Resources.ApiMsg.NoRecordFound
+					};
+					
+					return Request.CreateResponse(HttpStatusCode.OK, myError);
+					//throw new HttpResponseException(HttpStatusCode.NotFound);
 				}
-
-				return new APIResponse() { Status = eResponseStatus.Success, Result = cities.ToList() };
+				else
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, cities);
+				}
 			}
-		}
+        }
 
-
-		// GET: api/City/5
-		[AllowAnonymous]
-		[HttpGet]
-		[Route("api/City/Get/{cityId}")]
-		public APIResponse Get(int cityId)
-		{
-			List<CityModel> cities = null;
+        // GET: api/City/5
+		public HttpResponseMessage Get(int id)
+        {
+			CityModel eventCampaignList = null;
 			using (IDataContextAsync context = new GameManagerContext())
 			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
 			{
 				IRepositoryAsync<City> campaignRepository = new Repository<City>(context, unitOfWork);
 				ICityBusinessService billingService = new CityBusinessService(campaignRepository);
 
-				IQueryFluent<City> q = campaignRepository.Query(x => x.CityID == cityId);
-				cities = q.Select(y => new CityModel { CityID = y.CityID, Name = y.Name }).ToList();
-
-				foreach (var c in cities)
+				IQueryFluent<City> q = campaignRepository.Query(x => x.CityID == id);
+				eventCampaignList = q.Select(y => new CityModel { CityID = y.CityID, Name = y.Name }).FirstOrDefault();
+				
+				if (eventCampaignList == null)
 				{
-
-					IEventCampaignBusinessService evtCampaignBusinessService = new EventCampaignBusinessService();
-					List<ApiEventCampaignModel> evtList = evtCampaignBusinessService.GetListByCity(c.CityID);
-					if (evtList != null && (evtList.Count > 0))
+					var myError = new Error
 					{
-						if (evtList.Count > 1)
-						{
-							c.StartDate = evtList[0].StartDateTime;
-							c.EndDate = evtList[evtList.Count - 1].EndDateTime;
-						}
-						else
-						{
-							c.StartDate = evtList[0].StartDateTime;
-							c.EndDate = evtList[0].EndDateTime;
-						}
-					}
-
+						Status = Resources.ApiMsg.Failed,
+						Message = Resources.ApiMsg.NoRecordFound
+					};
+					return Request.CreateResponse(HttpStatusCode.OK, myError);
+					//throw new HttpResponseException(HttpStatusCode.NotFound);
+				}
+				else
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, eventCampaignList);
 				}
 			}
+        }
 
-			return new APIResponse() { Status = eResponseStatus.Success, Result = cities.ToList() };
-		}
+        // POST: api/City
+        public void Post([FromBody]string value)
+        {
+        }
 
-		// POST: api/City
-		public void Post([FromBody]string value)
-		{
-		}
+        // PUT: api/City/5
+        public void Put(int id, [FromBody]string value)
+        {
+        }
 
-		// PUT: api/City/5
-		public void Put(int id, [FromBody]string value)
-		{
-		}
-
-		// DELETE: api/City/5
-		public void Delete(int id)
-		{
-		}
-	}
+        // DELETE: api/City/5
+        public void Delete(int id)
+        {
+        }
+    }
 }

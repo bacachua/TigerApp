@@ -14,7 +14,6 @@ using EventManager.BusinessService;
 using System.Web.Http;
 using Repository.Pattern.Infrastructure;
 using System.Data.Entity.Validation;
-using EventManager.ApiModels;
 
 
 namespace EventManager.Web.Controllers
@@ -138,7 +137,7 @@ namespace EventManager.Web.Controllers
 		[AllowAnonymous]
 		[HttpGet]
 		[Route("api/api/EventRegister/ByUser")]
-		public APIResponse RegisterEventByUser(string userId)
+		public HttpResponseMessage RegisterEventByUser(string userId)
 		{
 			List<EventRegisterModel> eventCampaignList = null;
 			using (IDataContextAsync context = new GameManagerContext())
@@ -152,59 +151,18 @@ namespace EventManager.Web.Controllers
 
 				if (eventCampaignList == null)
 				{
-					return new APIResponse() { Status = eResponseStatus.Fail, Result = Resources.ApiMsg.NoRecordFound };			
-		     		//throw new HttpResponseException(HttpStatusCode.NotFound);
+					var myError = new Error
+					{
+						Status = Resources.ApiMsg.Failed,
+						Message = Resources.ApiMsg.NoRecordFound
+					};
+					return Request.CreateResponse(HttpStatusCode.OK, myError);
+					//throw new HttpResponseException(HttpStatusCode.NotFound);
 				}
 				else
 				{
-					return new APIResponse() { Status = eResponseStatus.Success, Result = eventCampaignList };		
-					//return Request.CreateResponse(HttpStatusCode.OK, eventCampaignList);
+					return Request.CreateResponse(HttpStatusCode.OK, eventCampaignList);
 				}
-			}
-		}
-
-		
-		[AllowAnonymous]
-		[HttpPost]
-		public APIResponse CancellRegisterEvent(EventRegisterStatusModel eventRegisterStatusModel)
-		{
-
-
-			using (IDataContextAsync context = new GameManagerContext())
-			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
-			{
-				IRepositoryAsync<EventRegister> eventRegisterRepository = new Repository<EventRegister>(context, unitOfWork);
-				IEventRegisterBusinessService billingService = new EventRegisterBusinessService(eventRegisterRepository);
-				var result = billingService.SetEventRegisterStatus(eventRegisterStatusModel.EventRegisterID, eEventRegisterStatus.Cancelled);
-				return new APIResponse() { Status = eResponseStatus.Success, Result = result };
-			}
-		}
-
-		[AllowAnonymous]
-		[HttpPost]
-		public APIResponse ConfirmPlayedRegisterEvent(EventRegisterStatusModel eventRegisterStatusModel)
-		{
-			using (IDataContextAsync context = new GameManagerContext())
-			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
-			{
-				IRepositoryAsync<EventRegister> eventRegisterRepository = new Repository<EventRegister>(context, unitOfWork);
-				IEventRegisterBusinessService billingService = new EventRegisterBusinessService(eventRegisterRepository);
-				var result = billingService.SetEventRegisterStatus(eventRegisterStatusModel.EventRegisterID, eEventRegisterStatus.Played);
-				return new APIResponse() { Status = eResponseStatus.Success, Result = result };
-			}
-		}
-
-		[AllowAnonymous]
-		[HttpPost]
-		public APIResponse SetRegisterEventToLate(EventRegisterStatusModel eventRegisterStatusModel)
-		{
-			using (IDataContextAsync context = new GameManagerContext())
-			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
-			{
-				IRepositoryAsync<EventRegister> eventRegisterRepository = new Repository<EventRegister>(context, unitOfWork);
-				IEventRegisterBusinessService billingService = new EventRegisterBusinessService(eventRegisterRepository);
-				var result = billingService.SetEventRegisterStatus(eventRegisterStatusModel.EventRegisterID, eEventRegisterStatus.Late);
-				return new APIResponse() { Status = eResponseStatus.Success, Result = result };
 			}
 		}
     }

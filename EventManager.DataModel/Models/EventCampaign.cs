@@ -12,10 +12,10 @@ namespace EventManager.DataModel.Models
         }
 
         public int EventCampaignID { get; set; }
-        public int EventID { get; set; }
+        public Nullable<int> EventID { get; set; }
         public Nullable<int> CityID { get; set; }
-        public DateTime StartDateTime { get; set; }
-        public DateTime EndDateTime { get; set; }
+        public Nullable<System.DateTime> StartDateTime { get; set; }
+        public Nullable<System.DateTime> EndDateTime { get; set; }
         public Nullable<int> TimeToPlayPerSession { get; set; }
         public Nullable<int> NumberOfPlayer1Time { get; set; }
         public Nullable<bool> Active { get; set; }
