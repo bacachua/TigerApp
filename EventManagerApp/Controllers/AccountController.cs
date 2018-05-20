@@ -579,9 +579,9 @@ namespace EventManager.Web.Controllers
 
         #endregion
 
-        [Route("PostSignatureImage")]
+        [Route("PostSignatureImage/{userId}")]
         [AllowAnonymous]
-        public APIResponse PostSignatureImage()
+        public APIResponse PostSignatureImage(string userId)
         {
             try
             {
@@ -595,7 +595,7 @@ namespace EventManager.Web.Controllers
                 }
 
                 IUserService user = new UserService();
-                var userId = HttpContext.Current.Request.Params["UserId"].ToString();
+                //var userId = HttpContext.Current.Request.Params["UserId"].ToString();
                 user.SaveSignatureImage(userId, filePath);
 
                 return new APIResponse() { Status = status, Result = filePath };
@@ -604,19 +604,6 @@ namespace EventManager.Web.Controllers
             {
                 return new APIResponse() { Status = eResponseStatus.Fail, Message = "Please Upload image of type .jpg,.gif,.png." };
             }
-        }
-        [Route("PostTest")]
-        [AllowAnonymous]
-        public APIResponse PostTest()
-        {
-            var httpPostedFile = HttpContext.Current.Request.Files["UploadedImage"];
-            if (httpPostedFile != null)
-            {
-                var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/Images"), httpPostedFile.FileName);
-                httpPostedFile.SaveAs(fileSavePath);
-            }
-            var userId = HttpContext.Current.Request.Params["UserId"].ToString();
-            return new APIResponse();
         }
     }
 }

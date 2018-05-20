@@ -52,6 +52,14 @@ namespace EventManager.Web.Controllers
             return new APIResponse() { Status = eResponseStatus.Success, Result = result };
         }
         [AllowAnonymous]
+        [HttpGet]
+        public APIResponse EventCampaignDetail(int id)
+        {
+            IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
+            var result = eVentCampaignSrv.GetEventCampaignDetail(id);
+            return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+        }
+        [AllowAnonymous]
         [HttpPost]
         public APIResponse IsValidTimeRegister(ApiEventRegisterModel model)
         {
