@@ -75,6 +75,7 @@ namespace EventManager.Web.Models
 		public string UserName { get; set; }
 		public Nullable<System.DateTime> BirthDate { get; set; }
 
+		public string SignatureImgPath { get; set; }
 		public int Status { get;set; }
 	
     }

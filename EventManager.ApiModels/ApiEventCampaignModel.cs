@@ -13,7 +13,7 @@ namespace EventManager.ApiModels
 		public string EventName { get; set; }
 
 		public int EventID { get; set; }
-        public string EventName { get; set; }
+       
         public string CityName { get; set; }
 		public Nullable<int> CityID { get; set; }
 		public Nullable<DateTime> StartDateTime { get; set; }
@@ -28,4 +28,13 @@ namespace EventManager.ApiModels
         public Nullable<int> NumberOfPlayer1Time { get; set; }
         public DateTime TimeAvailableToPlay { get; set; }
     }
+
+	public class EventCampaignByCityEventPeriod
+	{
+		
+		public int CityID { get; set; }
+		public DateTime StartDateTime { get; set; }
+		public DateTime EndDateTime { get; set; }
+		
+	}
 }

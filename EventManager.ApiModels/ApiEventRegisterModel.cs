@@ -21,6 +21,7 @@ namespace EventManager.ApiModels
     public class ApiEventRegisterUserModel: ApiEventRegisterModel
     {
         public string EventName { get; set; }
+		public int EventID { get; set; }
         public string CityName { get; set; }
         public string StatusName { get { return Enum.GetName(typeof(eEventRegisterStatus), Status); } }
     }

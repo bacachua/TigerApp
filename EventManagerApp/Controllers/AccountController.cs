@@ -609,8 +609,8 @@ namespace EventManager.Web.Controllers
                     var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/"), filePath);
                     httpPostedFile.SaveAs(fileSavePath);
                 }
-                IUserService user = new UserService();
-                user.SaveSignatureImage(userId, filePath);
+               // IUserService user = new UserService();
+              //  user.SaveSignatureImage(userId, filePath);
                 return new APIResponse() { Status = status, Result = filePath };
             }
             catch (Exception ex)

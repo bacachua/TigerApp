@@ -38,6 +38,7 @@ namespace EventManager.ApiModels
 		public string QRCode { get; set; }
 		public string Comment { get; set; }
 
+		public string SignatureImgPath { get; set; }
 		public string DeviceId { get; set; }
 	}
 }

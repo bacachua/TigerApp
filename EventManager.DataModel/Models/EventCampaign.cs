@@ -12,7 +12,7 @@ namespace EventManager.DataModel.Models
         }
 
         public int EventCampaignID { get; set; }
-        public Nullable<int> EventID { get; set; }
+        public int EventID { get; set; }
         public Nullable<int> CityID { get; set; }
         public Nullable<System.DateTime> StartDateTime { get; set; }
         public Nullable<System.DateTime> EndDateTime { get; set; }
