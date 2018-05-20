@@ -137,7 +137,7 @@ namespace EventManager.Web.Controllers
 		[AllowAnonymous]
 		[HttpGet]
 		[Route("api/api/EventRegister/ByUser")]
-		public HttpResponseMessage RegisterEventByUser(string userId)
+		public APIResponse RegisterEventByUser(string userId)
 		{
 			List<EventRegisterModel> eventCampaignList = null;
 			using (IDataContextAsync context = new GameManagerContext())
@@ -151,17 +151,13 @@ namespace EventManager.Web.Controllers
 
 				if (eventCampaignList == null)
 				{
-					var myError = new Error
-					{
-						Status = Resources.ApiMsg.Failed,
-						Message = Resources.ApiMsg.NoRecordFound
-					};
-					return Request.CreateResponse(HttpStatusCode.OK, myError);
-					//throw new HttpResponseException(HttpStatusCode.NotFound);
+					return new APIResponse() { Status = eResponseStatus.Fail, Result = Resources.ApiMsg.NoRecordFound };			
+		     		//throw new HttpResponseException(HttpStatusCode.NotFound);
 				}
 				else
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, eventCampaignList);
+					return new APIResponse() { Status = eResponseStatus.Success, Result = eventCampaignList };		
+					//return Request.CreateResponse(HttpStatusCode.OK, eventCampaignList);
 				}
 			}
 		}

@@ -76,6 +76,17 @@ namespace EventManager.Web.Controllers
 			var result = eVentCampaignSrv.GetListByCity(cityId);
 			return new APIResponse() { Status = eResponseStatus.Success, Result = result };
 		}
+
+		[AllowAnonymous]
+		[HttpGet]
+		[Route("api/EventCampaign/GetEventCampaignById/{campaignById}")]
+		public APIResponse GetEventCampaignById(int campaignById)
+		{
+			IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
+			var result = eVentCampaignSrv.GetEventCampaignById(campaignById);
+			return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+		}
+
         [AllowAnonymous]
         [HttpGet]
         [Route("api/EventCampaign/GetEventRegisterByQRCode/{qrCode}")]

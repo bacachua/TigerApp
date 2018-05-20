@@ -44,8 +44,6 @@ namespace EventManager.DataModel.Models
         public string QRCode { get; set; }
         public string Comment { get; set; }
         public string SignatureImgPath { get; set; }
-
-
         public string DeviceId { get; set; }
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }

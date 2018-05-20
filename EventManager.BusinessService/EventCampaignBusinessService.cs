@@ -26,7 +26,9 @@ namespace EventManager.BusinessService
         bool RegisterEvent(ApiEventRegisterModel model);
 		List<ApiEventCampaignModel> GetListByCity(int cityid);
         void SendNotificationBeforeOrLateEventTime(int numOfMinute, string _serverKey, string _senderId, string to, string title, string body, int status);
-		List<ApiEventRegisterUserModel> GetEventRegisterByQRCode(string qrCode);        
+		List<ApiEventRegisterUserModel> GetEventRegisterByQRCode(string qrCode);
+
+		ApiEventCampaignModel GetEventCampaignById(int campaignId);
     }
 
     public class EventCampaignBusinessService : IEventCampaignBusinessService
@@ -52,6 +54,7 @@ namespace EventManager.BusinessService
                 {
                     EventCampaignID = c.EventCampaignID,
                     EventName = c.Event.Name,
+					EventID = c.EventID,
                     CityName = c.City.Name,
                     StartDateTime = c.StartDateTime,
                     EndDateTime = c.EndDateTime,
@@ -162,6 +165,7 @@ namespace EventManager.BusinessService
 				{
 					EventCampaignID = c.EventCampaignID,
 					EventName = c.Event.Name,
+					EventID = c.EventID,
 					CityName = c.City.Name,
 					StartDateTime = c.StartDateTime,
 					EndDateTime = c.EndDateTime,
@@ -202,10 +206,52 @@ namespace EventManager.BusinessService
                     EventCampaignID = c.EventCampaignID.Value,
                     EventName = c.EventCampaign.Event.Name,
                     CityName = c.EventCampaign.City.Name,
+					EventID = c.EventCampaign.EventID,
                     Status = c.Status
                 }).ToList();
                 return model;
             }
-        }        
+        }
+
+		public ApiEventCampaignModel GetEventCampaignById(int campaignId)
+		{
+			List<ApiEventCampaignModel> models = new List<ApiEventCampaignModel>();
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				_repository = new Repository<EventCampaign>(context, unitOfWork);
+				var currentTime = DateTime.Now;
+				var entities = _repository.AllIncluding(c => c.City, c => c.Event, c => c.EventRegisters).Where((c => c.StartDateTime >= currentTime && c.EventCampaignID == campaignId)).OrderBy(c => c.EventCampaignID).OrderBy(c => c.StartDateTime).ToList();
+				models = entities.Select(c => new ApiEventCampaignModel()
+				{
+					EventCampaignID = c.EventCampaignID,
+					EventName = c.Event.Name,
+					EventID = c.EventID,
+					CityName = c.City.Name,
+					StartDateTime = c.StartDateTime,
+					EndDateTime = c.EndDateTime,
+					TimeToPlayPerSession = c.TimeToPlayPerSession,
+					NumberOfPlayer1Time = c.NumberOfPlayer1Time
+				}).ToList();
+				foreach (var item in models)
+				{
+					var entity = entities.FirstOrDefault(c => c.EventCampaignID == item.EventCampaignID);
+					var startTime = new DateTime(item.StartDateTime.Value.Year, item.StartDateTime.Value.Month, item.StartDateTime.Value.Day, item.StartDateTime.Value.Hour, item.StartDateTime.Value.Minute, 0);
+					while (startTime <= item.EndDateTime.Value)
+					{
+						if (!entity.EventRegisters.Any(c => c.StartDateTime.Value <= startTime && startTime < c.EndDateTime.Value))
+						{
+							item.TimeAvailableToPlay = startTime;
+							break;
+						}
+						startTime = startTime.AddMinutes(item.TimeToPlayPerSession.Value);
+					}
+				}
+			}
+			if (models == null || models.Count == 0) return null;
+			return models[0];
+		}
+
+		
     }
 }
