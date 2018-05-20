@@ -29,6 +29,8 @@ namespace EventManager.BusinessService
 		List<ApiEventRegisterUserModel> GetEventRegisterByQRCode(string qrCode);
 
 		ApiEventCampaignModel GetEventCampaignById(int campaignId);
+
+		List<ApiEventCampaignModel> GetListAvailableByCityEventPeriod(int cityId, DateTime fromDateTime, DateTime toDateTime);
     }
 
     public class EventCampaignBusinessService : IEventCampaignBusinessService
@@ -41,6 +43,54 @@ namespace EventManager.BusinessService
 
         }
 
+		public List<ApiEventCampaignModel> GetListAvailableByCityEventPeriod(int cityId, DateTime fromDateTime, DateTime toDateTime)
+		{
+			var currentTime = DateTime.Now;
+			
+			if (fromDateTime > toDateTime)
+				return null;
+			if (toDateTime < currentTime)
+				return null;
+
+			List<ApiEventCampaignModel> models = new List<ApiEventCampaignModel>();
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				_repository = new Repository<EventCampaign>(context, unitOfWork);
+
+				var entities = _repository.AllIncluding(c => c.City, c => c.Event, c => c.EventRegisters).Where((c => c.StartDateTime >= fromDateTime  && c.EndDateTime > currentTime && (c.CityID == cityId))).OrderBy(c => c.EventCampaignID).OrderBy(c => c.StartDateTime).ToList();
+				models = entities.Select(c => new ApiEventCampaignModel()
+				{
+					EventCampaignID = c.EventCampaignID,
+					EventName = c.Event.Name,
+					EventID = c.EventID,
+					CityName = c.City.Name,
+					StartDateTime = c.StartDateTime,
+					EndDateTime = c.EndDateTime,
+					TimeToPlayPerSession = c.TimeToPlayPerSession,
+					NumberOfPlayer1Time = c.NumberOfPlayer1Time
+				}).ToList();
+				List<int> statusList = new List<int>() { (int)eEventRegisterStatus.New, (int)eEventRegisterStatus.Reminded };
+				foreach (var item in models)
+				{
+					var entity = entities.FirstOrDefault(c => c.EventCampaignID == item.EventCampaignID);
+					var startTime = new DateTime(item.StartDateTime.Value.Year, item.StartDateTime.Value.Month, item.StartDateTime.Value.Day, item.StartDateTime.Value.Hour, item.StartDateTime.Value.Minute, 0);
+					while (startTime <= item.EndDateTime.Value)
+					{
+						var eventRegisters = entity.EventRegisters.Where(c => c.StartDateTime == startTime && statusList.Contains(c.Status)).ToList();
+						var numOfPlayerAvailable = item.NumberOfPlayer1Time - eventRegisters.Sum(c => c.NumberOfPlayer1Time);
+						if (numOfPlayerAvailable > 0)
+						{
+							item.TimeAvailableToPlay = startTime;
+							item.NumberOfPlayer1Time = numOfPlayerAvailable;
+							break;
+						}
+						startTime = startTime.AddMinutes(item.TimeToPlayPerSession.Value);
+					}
+				}
+			}
+			return models;
+		}
         public List<ApiEventCampaignModel> GetListAvailable()
         {
             List<ApiEventCampaignModel> models = new List<ApiEventCampaignModel>();
@@ -56,6 +106,7 @@ namespace EventManager.BusinessService
                     EventName = c.Event.Name,
 					EventID = c.EventID,
                     CityName = c.City.Name,
+					CityID  = c.CityID,
                     StartDateTime = c.StartDateTime,
                     EndDateTime = c.EndDateTime,
                     TimeToPlayPerSession = c.TimeToPlayPerSession,
