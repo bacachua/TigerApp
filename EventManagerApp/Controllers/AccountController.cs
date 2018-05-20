@@ -81,6 +81,7 @@ namespace EventManager.Web.Controllers
         // GET api/Account/UserInfo
         [Authorize]
         [Route("GetUserInfo")]
+		//[AllowAnonymous]		
         public ApiAccountModel GetUserInfo(string userid)
         {
 
@@ -92,8 +93,23 @@ namespace EventManager.Web.Controllers
                 return AccountBusinessServiceService.GetAccountInfo(userid);
 
             }
-
         }
+
+		//[Authorize]
+		[Route("GetUserInfoByEmail")]
+		[AllowAnonymous]		
+		public ApiAccountModel GetUserInfoByEmail(string email)
+		{
+
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
+				AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+				return AccountBusinessServiceService.GetAccountInfoByEmail(email);
+
+			}
+		}
 
         // POST api/Account/Logout
         [Route("Logout")]
@@ -447,7 +463,7 @@ namespace EventManager.Web.Controllers
 					aspNetUser.PhoneNumber = model.PhoneNumber;
 					aspNetUser.Address = model.Address;
 					aspNetUser.UserName = model.UserName;
-					
+					aspNetUser.SignatureImgPath = model.SignatureImgPath;
 					customerRepository.InsertOrUpdateGraph(aspNetUser);
 					unitOfWork.SaveChanges();
 				}
@@ -593,11 +609,8 @@ namespace EventManager.Web.Controllers
                     var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/"), filePath);
                     httpPostedFile.SaveAs(fileSavePath);
                 }
-
                 IUserService user = new UserService();
-                //var userId = HttpContext.Current.Request.Params["UserId"].ToString();
                 user.SaveSignatureImage(userId, filePath);
-
                 return new APIResponse() { Status = status, Result = filePath };
             }
             catch (Exception ex)

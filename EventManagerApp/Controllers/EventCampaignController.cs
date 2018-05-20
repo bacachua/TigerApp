@@ -51,6 +51,16 @@ namespace EventManager.Web.Controllers
             var result = eVentCampaignSrv.GetListAvailable();
             return new APIResponse() { Status = eResponseStatus.Success, Result = result };
         }
+
+		[AllowAnonymous]
+		[HttpPost]
+		public APIResponse GetListAvailableByCityEventPeriod(EventCampaignByCityEventPeriod model)
+		{
+			IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
+			var result = eVentCampaignSrv.GetListAvailableByCityEventPeriod(model.CityID, model.StartDateTime, model.EndDateTime);
+			return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+		}
+
         [AllowAnonymous]
         [HttpGet]
         public APIResponse EventCampaignDetail(int id)
@@ -84,6 +94,17 @@ namespace EventManager.Web.Controllers
 			var result = eVentCampaignSrv.GetListByCity(cityId);
 			return new APIResponse() { Status = eResponseStatus.Success, Result = result };
 		}
+
+		[AllowAnonymous]
+		[HttpGet]
+		[Route("api/EventCampaign/GetEventCampaignById/{campaignById}")]
+		public APIResponse GetEventCampaignById(int campaignById)
+		{
+			IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
+			var result = eVentCampaignSrv.GetEventCampaignById(campaignById);
+			return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+		}
+
         [AllowAnonymous]
         [HttpGet]
         [Route("api/EventCampaign/GetEventRegisterByQRCode/{qrCode}")]
