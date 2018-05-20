@@ -595,8 +595,8 @@ namespace EventManager.Web.Controllers
                 }
 
                 IUserService user = new UserService();
-                var userId = HttpContext.Current.Request.Params["UserId"].ToString();
-                user.SaveSignatureImage(userId, filePath);
+               // var userId = HttpContext.Current.Request.Params["UserId"].ToString();
+              //  user.SaveSignatureImage(userId, filePath);
 
                 return new APIResponse() { Status = status, Result = filePath };
             }
