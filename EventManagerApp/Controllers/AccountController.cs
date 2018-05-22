@@ -79,9 +79,9 @@ namespace EventManager.Web.Controllers
         }
 
         // GET api/Account/UserInfo
-        [Authorize]
+       
         [Route("GetUserInfo")]
-		//[AllowAnonymous]		
+		[AllowAnonymous]		
         public ApiAccountModel GetUserInfo(string userid)
         {
 

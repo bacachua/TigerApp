@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="AccountBusinessService.cs" />
     <Compile Include="CityBusinessService.cs" />
+    <Compile Include="EventBusinessService.cs" />
     <Compile Include="EventCampaignBusinessService.cs" />
     <Compile Include="EventRegisterBusinessService.cs" />
     <Compile Include="NotificationService.cs" />
