@@ -303,7 +303,7 @@ namespace EventManager.BusinessService
             using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
             {
                 _eventRegisterRepo = new Repository<EventRegister>(context, unitOfWork);
-                var model = _eventRegisterRepo.Queryable().Where(c => c.AspNetUser.QRCode == qrCode).OrderByDescending(c => c.StartDateTime).Select(c => new ApiEventRegisterUserModel()
+                var model = _eventRegisterRepo.Queryable().Where(c => c.AspNetUser.QRCode == qrCode && ( c.Status == 0 || c.Status == 2)).OrderByDescending(c => c.StartDateTime).Select(c => new ApiEventRegisterUserModel()
                 {
                     EventRegisterID = c.EventRegisterID,
                     StartDateTime = c.StartDateTime.Value,
