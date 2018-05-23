@@ -16,7 +16,7 @@ using System.Linq.Expressions;
 using System.IO;
 using System.Globalization;
 using Repository.Pattern.Infrastructure;
-
+using LinqKit;
 namespace EventManager.BusinessService
 {
     public interface IEventCampaignBusinessService
@@ -25,7 +25,7 @@ namespace EventManager.BusinessService
         bool IsValidTimeRegister(ApiEventRegisterModel model);
         bool RegisterEvent(ApiEventRegisterModel model);
 		List<ApiEventCampaignModel> GetListByCity(int cityid);
-        void SendNotificationBeforeOrLateEventTime(int numOfMinute, string _apiKey, string _appId, string to, string message, int status);
+        void SendNotificationBeforeOrLateEventTime(int numOfMinute, string to, string message, eEventRegisterStatus status);
 		List<ApiEventRegisterUserModel> GetEventRegisterByQRCode(string qrCode);
 		ApiEventCampaignModel GetEventCampaignById(int campaignId);
 		List<ApiEventCampaignModel> GetListAvailableByCityEventPeriod(int cityId, DateTime fromDateTime, DateTime toDateTime);
@@ -235,12 +235,24 @@ namespace EventManager.BusinessService
             }
             return valid;
         }
-        public void SendNotificationBeforeOrLateEventTime(int numOfMinute, string _serverKey, string _senderId, string to, string message, int status)
+        public void SendNotificationBeforeOrLateEventTime(int numOfMinute, string to, string message, eEventRegisterStatus status)
         {
             var currentDate = DateTime.Now;
             var compareDate = currentDate.AddMinutes(numOfMinute);
 
             Expression<Func<EventRegister, bool>> filter = c => true;
+            if (status == eEventRegisterStatus.Reminded)
+            {
+                filter = filter.And(c => c.Status == (int)eEventRegisterStatus.New && c.StartDateTime > currentDate && c.StartDateTime <= compareDate);
+            }
+            else//late
+            {
+                filter = filter.And(c =>
+                                        (c.Status == (int)eEventRegisterStatus.New || c.Status == (int)eEventRegisterStatus.Reminded)
+                                        &&
+                                        compareDate > c.StartDateTime
+                                        );
+            }
             using (IDataContextAsync context = new GameManagerContext())
             using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
             {
