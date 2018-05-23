@@ -19,6 +19,7 @@ namespace EventManager.BusinessService
     public interface IUserService
     {
         void SaveSignatureImage(string userId, string imgPath);
+        void SaveDeviceToken(string userId, string token);
     }
     public class UserService: IUserService
     {
@@ -31,6 +32,18 @@ namespace EventManager.BusinessService
                 _userRepository = new Repository<AspNetUser>(context, unitOfWork);
                 var user = _userRepository.Find(userId);
                 user.SignatureImgPath = imgPath;
+                _userRepository.Update(user);
+                unitOfWork.SaveChanges();
+            }
+        }
+        public void SaveDeviceToken(string userId, string token)
+        {
+            using (IDataContextAsync context = new GameManagerContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            {
+                _userRepository = new Repository<AspNetUser>(context, unitOfWork);
+                var user = _userRepository.Find(userId);
+                user.DeviceId = token;
                 _userRepository.Update(user);
                 unitOfWork.SaveChanges();
             }

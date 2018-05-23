@@ -25,7 +25,7 @@ namespace EventManager.BusinessService
         bool IsValidTimeRegister(ApiEventRegisterModel model);
         bool RegisterEvent(ApiEventRegisterModel model);
 		List<ApiEventCampaignModel> GetListByCity(int cityid);
-        void SendNotificationBeforeOrLateEventTime(int numOfMinute, string _serverKey, string _senderId, string to, string title, string body, int status);
+        void SendNotificationBeforeOrLateEventTime(int numOfMinute, string _apiKey, string _appId, string to, string message, int status);
 		List<ApiEventRegisterUserModel> GetEventRegisterByQRCode(string qrCode);
 		ApiEventCampaignModel GetEventCampaignById(int campaignId);
 		List<ApiEventCampaignModel> GetListAvailableByCityEventPeriod(int cityId, DateTime fromDateTime, DateTime toDateTime);
@@ -235,7 +235,7 @@ namespace EventManager.BusinessService
             }
             return valid;
         }
-        public void SendNotificationBeforeOrLateEventTime(int numOfMinute, string _serverKey, string _senderId, string to, string title, string body, int status)
+        public void SendNotificationBeforeOrLateEventTime(int numOfMinute, string _serverKey, string _senderId, string to, string message, int status)
         {
             var currentDate = DateTime.Now;
             var compareDate = currentDate.AddMinutes(numOfMinute);
@@ -251,7 +251,7 @@ namespace EventManager.BusinessService
                     iNotificationService = new NotificationService();
                     foreach (var item in entities)
                     {
-                        iNotificationService.NotifyAsync(_serverKey, _senderId, item.AspNetUser.DeviceId, title, body);
+                        iNotificationService.NotifyAsync("NTcyNmI3MTEtZmQ4My00YTE4LTk5ZTEtMTliODZmNjcyYTBl", "16df746e-2fab-4a86-88ca-bbcee8d8b76c", item.AspNetUser.DeviceId, message);
                         item.Status = (int)status;
                         item.AspNetUser = null;
                         _eventRegisterRepo.Update(item);

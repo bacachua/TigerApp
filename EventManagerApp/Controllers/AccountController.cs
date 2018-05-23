@@ -607,9 +607,24 @@ namespace EventManager.Web.Controllers
                     var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/"), filePath);
                     httpPostedFile.SaveAs(fileSavePath);
                 }
-               // IUserService user = new UserService();
-              //  user.SaveSignatureImage(userId, filePath);
+                IUserService user = new UserService();
+                user.SaveSignatureImage(userId, filePath);
                 return new APIResponse() { Status = status, Result = filePath };
+            }
+            catch (Exception ex)
+            {
+                return new APIResponse() { Status = eResponseStatus.Fail, Message = "Please Upload image of type .jpg,.gif,.png." };
+            }
+        }
+        [Route("SaveDeviceToken/{userId}")]
+        [AllowAnonymous]
+        public APIResponse SaveDeviceToken(string userId,string token)
+        {
+            try
+            {
+                IUserService user = new UserService();
+                user.SaveDeviceToken(userId, token);
+                return new APIResponse();
             }
             catch (Exception ex)
             {
