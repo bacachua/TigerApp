@@ -84,14 +84,12 @@ namespace EventManager.Web.Controllers
 		[AllowAnonymous]		
         public ApiAccountModel GetUserInfo(string userid)
         {
-
             using (IDataContextAsync context = new GameManagerContext())
             using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
             {
                 IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
                 AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
                 return AccountBusinessServiceService.GetAccountInfo(userid);
-
             }
         }
 
