@@ -1,51 +1,60 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace EventManager.BusinessService
 {
     public interface INotificationService
     {
-        Task<bool> NotifyAsync(string _serverKey, string _senderId, string to, string title, string body);
+        void NotifyAsync(string _apiKey, string _appId, string to, string message);
     }
     public class NotificationService : INotificationService
     {
-        public async Task<bool> NotifyAsync(string _serverKey, string _senderId, string to, string title, string body)
+        public void NotifyAsync(string _apiKey, string _appId, string to, string message)
         {
+            var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
+            request.KeepAlive = true;
+            request.Method = "POST";
+            request.ContentType = "application/json; charset=utf-8";
+            request.Headers.Add("authorization", "Basic "+ _apiKey);
+
+            var serializer = new JavaScriptSerializer();            
+            var obj = new
+            {
+                app_id = _appId,
+                contents = new { en = message },
+                included_segments = new string[] { "Active Users" }
+            };
+            var param = serializer.Serialize(obj);
+            byte[] byteArray = Encoding.UTF8.GetBytes(param);
+            string responseContent = null;
             try
             {
-                // Get the server key from FCM console
-                var serverKey = string.Format("key={0}", _serverKey);
-                // Get the sender id from FCM console
-                var senderId = string.Format("id={0}", _senderId);
-                var data = new
+                using (var writer = request.GetRequestStream())
                 {
-                    to, // Recipient device token
-                    notification = new { title, body }
-                };
-                // Using Newtonsoft.Json
-                var jsonBody = JsonConvert.SerializeObject(data);
-                using (var httpRequest = new HttpRequestMessage(HttpMethod.Post, "https://fcm.googleapis.com/fcm/send"))
+                    writer.Write(byteArray, 0, byteArray.Length);
+                }
+
+                using (var response = request.GetResponse() as HttpWebResponse)
                 {
-                    httpRequest.Headers.TryAddWithoutValidation("Authorization", serverKey);
-                    httpRequest.Headers.TryAddWithoutValidation("Sender", senderId);
-                    httpRequest.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-                    using (var httpClient = new HttpClient())
+                    using (var reader = new StreamReader(response.GetResponseStream()))
                     {
-                        var result = await httpClient.SendAsync(httpRequest);
-                        if (result.IsSuccessStatusCode)
-                        {
-                            return true;
-                        }
+                        responseContent = reader.ReadToEnd();
                     }
                 }
-                return false;
             }
-            catch (Exception e) { return false; }
+            catch (WebException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                System.Diagnostics.Debug.WriteLine(new StreamReader(ex.Response.GetResponseStream()).ReadToEnd());
+            }
         }
     }
 }
