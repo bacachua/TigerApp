@@ -28,6 +28,7 @@ using System.Linq;
 using EventManager.ApiModels;
 using System.Drawing;
 using System.IO;
+using EventManager.Web.Filters;
 
 namespace EventManager.Web.Controllers
 {
@@ -592,23 +593,23 @@ namespace EventManager.Web.Controllers
         }
 
         #endregion
-
-        [Route("PostSignatureImage/{userId}")]
+		[ValidateMimeMultipartContentFilter]
+        [Route("PostSignatureImage")]
         [AllowAnonymous]
-        public APIResponse PostSignatureImage(string userId)
+		public APIResponse PostSignatureImage()
         {
             try
             {
                 eResponseStatus status = eResponseStatus.Success;
-                var httpPostedFile = HttpContext.Current.Request.Files[0];
+				var httpPostedFile =  HttpContext.Current.Request.Files[0];
                 var filePath = "Images/" + new Random().Next().ToString() + httpPostedFile.FileName;
                 if (httpPostedFile != null)
                 {
                     var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/"), filePath);
                     httpPostedFile.SaveAs(fileSavePath);
                 }
-                IUserService user = new UserService();
-                user.SaveSignatureImage(userId, filePath);
+                //IUserService user = new UserService();
+                //user.SaveSignatureImage(userId, filePath);
                 return new APIResponse() { Status = status, Result = filePath };
             }
             catch (Exception ex)

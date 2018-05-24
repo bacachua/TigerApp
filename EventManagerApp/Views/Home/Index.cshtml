@@ -3,62 +3,21 @@
 }
 
 <div class="row">
-  <div class="col-sm-4">
-    <form data-bind="submit: callApi">
-      <h3>Invoke API</h3>
-      <div class="form-group">
-        <label>User</label>
-        <input class="form-control" type="text" readonly data-bind="value: user" />
-      </div>
-      <div class="form-group">
-        <label>Result</label>
-        <input class="form-control" type="text" readonly data-bind="value: result" />
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-default">Call API</button>
-      </div>
-      <div class="form-group error-messages" data-bind="foreach: errors">
-         <p data-bind="text: $data" />
-      </div>
-    </form>
-  </div>
-
-  <div class="col-sm-4">
-    <form data-bind="submit: register">
-      <h3>Register</h3>
-      <div class="form-group">
-        <label>Email</label>
-        <input class="form-control" type="text" data-bind="value: registerEmail"/>
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input class="form-control" type="password" data-bind="value: registerPassword"/>
-      </div>
-      <div class="form-group">
-        <label>Confirm Password</label>
-        <input class="form-control" type="password" data-bind="value: registerPassword2" />
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-default">Register</button>
-      </div>
-    </form>
-  </div>
-
-  <div class="col-sm-4">
-    <h3>Log In</h3>
-    <form data-bind="submit: login">
-      <div class="form-group">
-        <label>Email</label>
-        <input class="form-control" type="text" data-bind="value: loginEmail"/>
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input class="form-control" type="password" data-bind="value: loginPassword"/>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-default">Log In</button>
-        <button data-bind="click: logout" class="btn btn-default">Log Out</button>
-      </div>
-    </form>
-  </div>
+	<div style="margin-top:100px">
+	Được giới thiệu từ 2015, Bức tường Tiger (Tiger Wall) là chuỗi sự kiện truyền
+	cảm hứng cho giới trẻ vượt qua những thử thách trong cuộc sống, theo đuổi
+	đam mê, khát vọng để thực hiện giấc mơ của bản thân.
+	Sử dụng ứng dụng Tiger Wall, đăng ký trở thành viên để được hưởng những
+	quyền lợi đặc biệt như:
+	</div>
+	<ul style="margin-top:50px">
+		<li>Đăng ký chơi các thử thách của bức tường Tiger trực tuyến</li>
+		<li>Ưu tiên chẹck in tham gia chơi qua cổng riêng nhanh chóng thuận lợi</li>
+		<li>Tích điểm để nhận những phần quà hấp dẫn</li>
+		<li>
+			Được cập nhật thông tin mới nhất về các hoạt động của sự kiện bức tường
+			Tiger
+		</li>
+	</ul> 
+	
 </div>

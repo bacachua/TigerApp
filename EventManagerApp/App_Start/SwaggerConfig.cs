@@ -2,6 +2,7 @@ using System.Web.Http;
 using WebActivatorEx;
 using EventManager.Web;
 using Swashbuckle.Application;
+using EventManager.Web.Controllers;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -12,7 +13,7 @@ namespace EventManager.Web
         public static void Register()
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
-
+			
             GlobalConfiguration.Configuration 
                 .EnableSwagger(c =>
                     {
@@ -33,7 +34,7 @@ namespace EventManager.Web
                         // additional fields by chaining methods off SingleApiVersion.
                         //
                         c.SingleApiVersion("v1", "EventManager.Web");
-
+						 c.OperationFilter<FileOperationFilter>();
                         // If your API has multiple versions, use "MultipleApiVersions" instead of "SingleApiVersion".
                         // In this case, you must provide a lambda that tells Swashbuckle which actions should be
                         // included in the docs for a given API version. Like "SingleApiVersion", each call to "Version"

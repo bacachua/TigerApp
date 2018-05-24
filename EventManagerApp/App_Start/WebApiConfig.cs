@@ -37,6 +37,7 @@ namespace EventManager.Web
             //config.Filters.Add(new EventManager.Web.Filters.RequireHttpsAttribute());
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             config.Formatters.XmlFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("multipart/form-data"));
+
         }
     }
 }
