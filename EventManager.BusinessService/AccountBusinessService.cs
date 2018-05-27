@@ -39,6 +39,7 @@ namespace EventManager.BusinessService
 			{
 				//_repository = new Repository<AspNetUser>(context, unitOfWork);
 				var uAccount = _repository.Queryable().Where(x => x.Id == userId).FirstOrDefault();
+				if (uAccount == null) return null;
 				model = new ApiAccountModel();
 				model.Id = uAccount.Id;
 				model.FirstName = uAccount.FirstName;
@@ -65,20 +66,24 @@ namespace EventManager.BusinessService
 			{
 				//_repository = new Repository<AspNetUser>(context, unitOfWork);
 				var uAccount = _repository.Queryable().Where(x => x.Email == email).FirstOrDefault();
+				if (uAccount == null) return null;
 				model = new ApiAccountModel();
-				model.Id = uAccount.Id;
-				model.FirstName = uAccount.FirstName;
-				model.LastName = uAccount.LastName;
-				model.Email = uAccount.Email;
-				model.PhoneNumber = uAccount.PhoneNumber;
-				model.CityId = uAccount.CityId;
-				model.BirthDate = uAccount.BirthDate;
-				model.Address = uAccount.Address;
-				model.QRCode = uAccount.QRCode;
-				model.PasswordHash = uAccount.PasswordHash;
-				model.DeviceId = uAccount.DeviceId;
-				model.IdentityNumber = uAccount.IdentityNumber;
-				model.SignatureImgPath = uAccount.SignatureImgPath;
+				if (uAccount != null)
+				{
+					model.Id = uAccount.Id;
+					model.FirstName = uAccount.FirstName;
+					model.LastName = uAccount.LastName;
+					model.Email = uAccount.Email;
+					model.PhoneNumber = uAccount.PhoneNumber;
+					model.CityId = uAccount.CityId;
+					model.BirthDate = uAccount.BirthDate;
+					model.Address = uAccount.Address;
+					model.QRCode = uAccount.QRCode;
+					model.PasswordHash = uAccount.PasswordHash;
+					model.DeviceId = uAccount.DeviceId;
+					model.IdentityNumber = uAccount.IdentityNumber;
+					model.SignatureImgPath = uAccount.SignatureImgPath;
+				}
 			}
 			return model;
 		}

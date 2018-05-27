@@ -80,10 +80,22 @@ namespace EventManager.Web.Controllers
         [AllowAnonymous]
         [HttpPost]
         public APIResponse RegisterEvent(ApiEventRegisterModel model)
-        {
-            IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
-            var result = eVentCampaignSrv.RegisterEvent(model);
-            return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+        {	
+			bool result ;            
+			try
+			{
+				IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
+				result = eVentCampaignSrv.RegisterEvent(model);
+			}catch(Exception ex)
+			{
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = "Đăng ký trò chơi Không thành công" };
+			}
+           
+			if (!result)
+			{
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = "Đăng ký trò chơi Không thành công" };
+			}
+			return new APIResponse() { Status = eResponseStatus.Success, Result = "Đăng ký trò chơi thành công" };
         }
 
 		[AllowAnonymous]
@@ -91,7 +103,7 @@ namespace EventManager.Web.Controllers
 		public APIResponse EventCampaignByCity(int cityId)
 		{
 			IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
-			var result = eVentCampaignSrv.GetListByCity(cityId);
+			var result = eVentCampaignSrv.GetListByCity(cityId);		
 			return new APIResponse() { Status = eResponseStatus.Success, Result = result };
 		}
 

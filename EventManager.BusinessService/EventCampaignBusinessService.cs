@@ -64,6 +64,7 @@ namespace EventManager.BusinessService
 					EventName = c.Event.Name,
 					EventID = c.EventID,
 					CityName = c.City.Name,
+					CityID = c.CityID,
 					StartDateTime = c.StartDateTime,
 					EndDateTime = c.EndDateTime,
 					TimeToPlayPerSession = c.TimeToPlayPerSession,
@@ -157,6 +158,7 @@ namespace EventManager.BusinessService
                 model.EventCampaignID = entity.EventCampaignID;
                 model.EventName = entity.Event.Name;
                 model.CityName = entity.City.Name;
+				model.CityID = entity.CityID;
                 model.StartDateTime = entity.StartDateTime;
                 model.EndDateTime = entity.EndDateTime;
                 model.TimeToPlayPerSession = entity.TimeToPlayPerSession;
@@ -287,6 +289,7 @@ namespace EventManager.BusinessService
 					EventID = c.EventID,
 					EventName = c.Event.Name,
 					CityName = c.City.Name,
+					CityID = c.CityID,
 					StartDateTime = c.StartDateTime,
 					EndDateTime = c.EndDateTime,
 					TimeToPlayPerSession = c.TimeToPlayPerSession,
@@ -326,6 +329,7 @@ namespace EventManager.BusinessService
                     EventCampaignID = c.EventCampaignID.Value,
                     EventName = c.EventCampaign.Event.Name,
                     CityName = c.EventCampaign.City.Name,
+					CityID = c.EventCampaign.CityID,
 					EventID = c.EventCampaign.EventID,
                     Status = c.Status
                 }).ToList();
@@ -348,6 +352,7 @@ namespace EventManager.BusinessService
 					EventName = c.Event.Name,
 					EventID = c.EventID,
 					CityName = c.City.Name,
+					CityID = c.CityID,
 					StartDateTime = c.StartDateTime,
 					EndDateTime = c.EndDateTime,
 					TimeToPlayPerSession = c.TimeToPlayPerSession,

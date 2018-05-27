@@ -19,7 +19,7 @@ namespace EventManager.Web.Controllers
 					operation.parameters.Clear();
 				operation.parameters.Add(new Parameter
 				{
-					name = "File",
+					name = "upFile",
 					@in = "formData",
 					description = "Upload software package",
 					required = true,

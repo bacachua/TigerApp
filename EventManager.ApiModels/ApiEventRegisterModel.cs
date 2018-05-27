@@ -23,6 +23,7 @@ namespace EventManager.ApiModels
         public string EventName { get; set; }
 		public int EventID { get; set; }
         public string CityName { get; set; }
+		public int? CityID { get; set; }
         public string StatusName { get { return Enum.GetName(typeof(eEventRegisterStatus), Status); } }
     }
     public enum eEventRegisterStatus: int

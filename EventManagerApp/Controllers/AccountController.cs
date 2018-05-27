@@ -29,6 +29,7 @@ using EventManager.ApiModels;
 using System.Drawing;
 using System.IO;
 using EventManager.Web.Filters;
+using System.Net;
 
 namespace EventManager.Web.Controllers
 {
@@ -82,22 +83,27 @@ namespace EventManager.Web.Controllers
         // GET api/Account/UserInfo
        
         [Route("GetUserInfo")]
-		[AllowAnonymous]		
-        public ApiAccountModel GetUserInfo(string userid)
+		[AllowAnonymous]
+		public APIResponse GetUserInfo(string userid)
         {
             using (IDataContextAsync context = new GameManagerContext())
             using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
             {
                 IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
-                AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
-                return AccountBusinessServiceService.GetAccountInfo(userid);
+				AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+                ApiAccountModel apiAccountModel  = AccountBusinessServiceService.GetAccountInfo(userid);
+				if (apiAccountModel == null)
+				{
+					return new APIResponse() { Status = eResponseStatus.Fail, Result = "Không tìm thấy tài khoản thành viên" };
+				}
+				return new APIResponse() { Status = eResponseStatus.Success, Result = apiAccountModel };
             }
         }
 
 		//[Authorize]
 		[Route("GetUserInfoByEmail")]
-		[AllowAnonymous]		
-		public ApiAccountModel GetUserInfoByEmail(string email)
+		[AllowAnonymous]
+		public APIResponse GetUserInfoByEmail(string email)
 		{
 
 			using (IDataContextAsync context = new GameManagerContext())
@@ -105,8 +111,12 @@ namespace EventManager.Web.Controllers
 			{
 				IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
 				AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
-				return AccountBusinessServiceService.GetAccountInfoByEmail(email);
-
+				ApiAccountModel accountModel = AccountBusinessServiceService.GetAccountInfoByEmail(email);
+				if (accountModel == null)
+				{
+					return new APIResponse() { Status = eResponseStatus.Fail, Result = "Không tìm thấy tài khoản thành viên" };
+				}
+				return new APIResponse() { Status = eResponseStatus.Success, Result = accountModel };
 			}
 		}
 
@@ -199,11 +209,14 @@ namespace EventManager.Web.Controllers
 
         // POST api/Account/AddExternalLogin
         [Route("AddExternalLogin")]
-        public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
+        //public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
+
+		public async Task<APIResponse> AddExternalLogin(AddExternalLoginBindingModel model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                //return BadRequest(ModelState);
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = BadRequest(ModelState) };
             }
 
             Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
@@ -214,14 +227,16 @@ namespace EventManager.Web.Controllers
                 && ticket.Properties.ExpiresUtc.HasValue
                 && ticket.Properties.ExpiresUtc.Value < DateTimeOffset.UtcNow))
             {
-                return BadRequest("External login failure.");
+                //return BadRequest("External login failure.");
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = "Không đăng nhập được" };
             }
 
             ExternalLoginData externalData = ExternalLoginData.FromIdentity(ticket.Identity);
 
             if (externalData == null)
             {
-                return BadRequest("The external login is already associated with an account.");
+                //return BadRequest("The external login is already associated with an account.");
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = "The external login is already associated with an account." };
             }
 
             IdentityResult result = await UserManager.AddLoginAsync(User.Identity.GetUserId(),
@@ -229,10 +244,11 @@ namespace EventManager.Web.Controllers
 
             if (!result.Succeeded)
             {
-                return GetErrorResult(result);
+                //return GetErrorResult(result);
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = result };
             }
-
-            return Ok();
+			return new APIResponse() { Status = eResponseStatus.Success, Result = "Đăng nhập thành công." };
+            //return Ok();
         }
 
         // POST api/Account/RemoveLogin
@@ -269,32 +285,37 @@ namespace EventManager.Web.Controllers
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
         [Route("ExternalLogin", Name = "ExternalLogin")]
-        public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
+        //public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
+
+		public async Task<APIResponse> GetExternalLogin(string provider, string error = null)		
         {
-            if (error != null)
-            {
-                return Redirect(Url.Content("~/") + "#error=" + Uri.EscapeDataString(error));
-            }
+			//if (error != null)
+			//{
+			//	return Redirect(Url.Content("~/") + "#error=" + Uri.EscapeDataString(error));
+			//}
 
             if (!User.Identity.IsAuthenticated)
             {
-                return new ChallengeResult(provider, this);
+                ///return new ChallengeResult(provider, this);
+				///
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = provider };
             }
 
             ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
             if (externalLogin == null)
             {
-                return InternalServerError();
+               // return InternalServerError();
             }
 
             if (externalLogin.LoginProvider != provider)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                return new ChallengeResult(provider, this);
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = provider };
+               // return new ChallengeResult(provider, this);
             }
 
-            ApplicationUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
+            ApplicationUser user =  await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
                 externalLogin.ProviderKey));
 
             bool hasRegistered = user != null;
@@ -303,10 +324,15 @@ namespace EventManager.Web.Controllers
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
 
-                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                   OAuthDefaults.AuthenticationType);
-                ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    CookieAuthenticationDefaults.AuthenticationType);
+				//ClaimsIdentity oAuthIdentity =  user.GenerateUserIdentityAsync(UserManager,
+				//   OAuthDefaults.AuthenticationType);
+				//ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
+				//	CookieAuthenticationDefaults.AuthenticationType);
+
+				ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+				   OAuthDefaults.AuthenticationType);
+				ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
+					CookieAuthenticationDefaults.AuthenticationType);
 
                 AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
                 Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
@@ -317,8 +343,8 @@ namespace EventManager.Web.Controllers
                 ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
                 Authentication.SignIn(identity);
             }
-
-            return Ok();
+			return new APIResponse() { Status = eResponseStatus.Success, Result = "Đăng nhập thành công" };
+          //  return Ok();
         }
 
         // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
@@ -366,11 +392,12 @@ namespace EventManager.Web.Controllers
         [AllowAnonymous]
         [Route("Register")]
 		public APIResponse Register(RegisterBindingModel model)
-        {
+		{
+			
 			if (!ModelState.IsValid)
 			{
-			
-				return new APIResponse() { Status = eResponseStatus.Success, Result ="Invalid Model" };
+				
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = "Thông tin nhập vào không đúng, Vui lòng nhập đầy đủ thông tin" };
 			}
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
@@ -380,18 +407,20 @@ namespace EventManager.Web.Controllers
             model.UserName = user.UserName;
             model.SecurityStamp = user.SecurityStamp;
             model.PasswordHash = user.PasswordHash;
-            Tuple<bool, string> updateResult = UpdateUserInfo(model);
+			try
+			{
+				Tuple<bool, string> updateResult = UpdateUserInfo(model);				
+			}catch(Exception ex)
+			{
+
+			}
+            
 			if (!result.Succeeded)
 			{
-				return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = string.Join(",",result.Errors.ToArray()) };
 			}
-			return new APIResponse() { Status = eResponseStatus.Success, Result = "Account succeffully Regirstered " };
-			//if (!result.Succeeded)
-			//{
-			//	return GetErrorResult(result);
-			//}
-
-			//return Ok();
+		
+			return new APIResponse() { Status = eResponseStatus.Success, Result = "Đăng ký thành viên thành công" };			
         }
 
         // POST api/Account/RegisterExternal
@@ -451,6 +480,8 @@ namespace EventManager.Web.Controllers
 					aspNetUser = customerRepository.Queryable().Where(x => x.Id == model.Id).SingleOrDefault<AspNetUser>();
 					aspNetUser.ObjectState = ObjectState.Modified;
 					aspNetUser.Id = model.Id;
+					//DateTime actualDate = new DateTime(Convert.ToInt16(model.BirthDate.Substring(0, 4)), Convert.ToInt16(model.BirthDate.Substring(5, 2)), Convert.ToInt16(model.BirthDate.Substring(8, 2)));
+					//aspNetUser.BirthDate = actualDate;
 					aspNetUser.BirthDate = model.BirthDate;
 					aspNetUser.Email = model.Email;
 					aspNetUser.CityId = model.CityId;
@@ -458,7 +489,7 @@ namespace EventManager.Web.Controllers
 					aspNetUser.FirstName = model.FirstName;
 					aspNetUser.LastName = model.LastName;
 					aspNetUser.QRCode = model.QRCode;
-					aspNetUser.BirthDate = model.BirthDate;
+					
 					aspNetUser.PhoneNumber = model.PhoneNumber;
 					aspNetUser.Address = model.Address;
 					aspNetUser.UserName = model.UserName;
@@ -593,7 +624,7 @@ namespace EventManager.Web.Controllers
         }
 
         #endregion
-		[ValidateMimeMultipartContentFilter]
+		/*[ValidateMimeMultipartContentFilter]
         [Route("PostSignatureImage")]
         [AllowAnonymous]
 		public APIResponse PostSignatureImage()
@@ -616,7 +647,27 @@ namespace EventManager.Web.Controllers
             {
                 return new APIResponse() { Status = eResponseStatus.Fail, Message = "Please Upload image of type .jpg,.gif,.png." };
             }
-        }
+        }*/
+		[AllowAnonymous]
+		[HttpPost]
+		public  HttpResponseMessage  PostFormData()
+		{
+			HttpResponseMessage response = new HttpResponseMessage();  
+			var httpRequest = HttpContext.Current.Request;  
+			if (httpRequest.Files.Count > 0)  
+			{  
+			foreach (string file in httpRequest.Files)  
+			{  
+			var postedFile = httpRequest.Files[file];
+			var filePath = HttpContext.Current.Server.MapPath("~/Images/" + postedFile.FileName);  
+			postedFile.SaveAs(filePath);  
+			}  
+		}  
+		return response;  
+
+
+		}
+
         [Route("SaveDeviceToken/{userId}")]
         [AllowAnonymous]
         public APIResponse SaveDeviceToken(string userId,string token)

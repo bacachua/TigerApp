@@ -67,7 +67,10 @@ namespace EventManager.Web.Controllers
 					}
 
 				}
-
+				if (cities == null || cities.Count == 0)
+				{					
+					return new APIResponse() { Status = eResponseStatus.Success, Result = "Không tìm thấy trò chơi" };
+				}
 				return new APIResponse() { Status = eResponseStatus.Success, Result = cities.ToList() };
 			}
 		}
@@ -110,7 +113,10 @@ namespace EventManager.Web.Controllers
 
 				}
 			}
-
+			if (cities == null || cities.Count == 0)
+			{
+				return new APIResponse() { Status = eResponseStatus.Success, Result = "Không tìm thấy trò chơi" };
+			}
 			return new APIResponse() { Status = eResponseStatus.Success, Result = cities.ToList() };
 		}
 
