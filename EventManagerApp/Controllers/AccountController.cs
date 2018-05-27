@@ -595,6 +595,7 @@ namespace EventManager.Web.Controllers
         #endregion
 		[ValidateMimeMultipartContentFilter]
         [Route("PostSignatureImage")]
+        [ImportFileParamType.SwaggerFormAttribute("ImportImage", "Upload image file")]
         [AllowAnonymous]
 		public APIResponse PostSignatureImage()
         {
@@ -617,6 +618,19 @@ namespace EventManager.Web.Controllers
                 return new APIResponse() { Status = eResponseStatus.Fail, Message = "Please Upload image of type .jpg,.gif,.png." };
             }
         }
+
+        [ValidateMimeMultipartContentFilter]
+        [HttpPost, Route("softwarepackage")]
+        [AllowAnonymous]
+        public APIResponse UploadSingleFile(HttpPostedFile file)
+        {
+            var streamProvider = new MultipartFormDataStreamProvider(HttpContext.Current.Server.MapPath("~/Images"));
+            var task = Request.Content.ReadAsMultipartAsync(streamProvider);
+            var firstFile = streamProvider.FileData.FirstOrDefault();
+
+            return null;
+        }
+
         [Route("SaveDeviceToken/{userId}")]
         [AllowAnonymous]
         public APIResponse SaveDeviceToken(string userId,string token)

@@ -3,6 +3,14 @@ using WebActivatorEx;
 using EventManager.Web;
 using Swashbuckle.Application;
 using EventManager.Web.Controllers;
+using System.Web.Http.Filters;
+using System.Web.Http.Controllers;
+using System.Net.Http;
+using System.Net;
+using Swashbuckle.Swagger;
+using System.Web.Http.Description;
+using System.Collections.Generic;
+using System;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -35,6 +43,7 @@ namespace EventManager.Web
                         //
                         c.SingleApiVersion("v1", "EventManager.Web");
 						 c.OperationFilter<FileOperationFilter>();
+                        c.OperationFilter<ImportFileParamType>();
                         // If your API has multiple versions, use "MultipleApiVersions" instead of "SingleApiVersion".
                         // In this case, you must provide a lambda that tells Swashbuckle which actions should be
                         // included in the docs for a given API version. Like "SingleApiVersion", each call to "Version"
@@ -209,6 +218,37 @@ namespace EventManager.Web
                         //
                         //c.EnableOAuth2Support("test-client-id", "test-realm", "Swagger UI");
                     });
+        }
+    }
+    public class ImportFileParamType : IOperationFilter
+    {
+        [AttributeUsage(AttributeTargets.Method)]
+        public sealed class SwaggerFormAttribute : Attribute
+        {
+            public SwaggerFormAttribute(string name, string description)
+            {
+                Name = name;
+                Description = description;
+            }
+            public string Name { get; private set; }
+
+            public string Description { get; private set; }
+        }
+        public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
+        {
+            if (operation.operationId == "Account_PostSignatureImage")  // controller and action name
+            {
+                operation.consumes.Add("multipart/form-data");
+                operation.parameters = new List<Parameter>
+                {
+                    new Parameter
+                    {
+                        name = "file",
+                        required = true,
+                        type = "file",
+                    }
+                };
+            }
         }
     }
 }
