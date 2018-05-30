@@ -53,7 +53,7 @@ namespace EventManager.Web.Controllers
         }
 
 		[AllowAnonymous]
-		[HttpPost]
+		[HttpGet]
 		public APIResponse GetListAvailableByCityEventPeriod(EventCampaignByCityEventPeriod model)
 		{
 			IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
@@ -99,7 +99,7 @@ namespace EventManager.Web.Controllers
         }
 
 		[AllowAnonymous]
-		[HttpPost]
+		[HttpGet]
 		public APIResponse EventCampaignByCity(int cityId)
 		{
 			IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();

@@ -120,6 +120,25 @@ namespace EventManager.Web.Controllers
 			}
 		}
 
+		[Route("GetUserInfoByPhoneNumber")]
+		[AllowAnonymous]
+		public APIResponse GetUserInfoByPhoneNumber(string phoneNumber)
+		{
+
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
+				AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+				ApiAccountModel accountModel = AccountBusinessServiceService.GetAccountInfoByPhone(phoneNumber);
+				if (accountModel == null)
+				{
+					return new APIResponse() { Status = eResponseStatus.Fail, Result = "Không tìm thấy tài khoản thành viên" };
+				}
+				return new APIResponse() { Status = eResponseStatus.Success, Result = accountModel };
+			}
+		}
+
         // POST api/Account/Logout
         [Route("Logout")]
         public IHttpActionResult Logout()
@@ -400,11 +419,12 @@ namespace EventManager.Web.Controllers
 				return new APIResponse() { Status = eResponseStatus.Fail, Result = "Thông tin nhập vào không đúng, Vui lòng nhập đầy đủ thông tin" };
 			}
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+			//var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+			var user = new ApplicationUser() { UserName = model.PhoneNumber, Email = model.Email };
 
             IdentityResult result =  UserManager.Create(user, model.Password);
             model.Id = user.Id;
-            model.UserName = user.UserName;
+			model.UserName = model.PhoneNumber;
             model.SecurityStamp = user.SecurityStamp;
             model.PasswordHash = user.PasswordHash;
 			try
@@ -492,7 +512,7 @@ namespace EventManager.Web.Controllers
 					
 					aspNetUser.PhoneNumber = model.PhoneNumber;
 					aspNetUser.Address = model.Address;
-					aspNetUser.UserName = model.UserName;
+					aspNetUser.UserName = model.PhoneNumber;
 					aspNetUser.SignatureImgPath = model.SignatureImgPath;
 					customerRepository.InsertOrUpdateGraph(aspNetUser);
 					unitOfWork.SaveChanges();
@@ -624,10 +644,11 @@ namespace EventManager.Web.Controllers
         }
 
         #endregion
-		/*[ValidateMimeMultipartContentFilter]
+		[ValidateMimeMultipartContentFilter]
         [Route("PostSignatureImage")]
         [ImportFileParamType.SwaggerFormAttribute("ImportImage", "Upload image file")]
         [AllowAnonymous]
+		[HttpPost]
 		public APIResponse PostSignatureImage()
         {
             try
@@ -649,7 +670,7 @@ namespace EventManager.Web.Controllers
                 return new APIResponse() { Status = eResponseStatus.Fail, Message = "Please Upload image of type .jpg,.gif,.png." };
             }
 
-        }*/
+        }
 		[AllowAnonymous]
 		[HttpPost]
 		public  HttpResponseMessage  PostFormData()

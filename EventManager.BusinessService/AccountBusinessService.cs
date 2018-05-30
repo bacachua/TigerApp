@@ -20,6 +20,8 @@ namespace EventManager.BusinessService
 	{
 		ApiAccountModel GetAccountInfo(string userId);
 		ApiAccountModel GetAccountInfoByEmail(string email);
+
+		ApiAccountModel GetAccountInfoByPhone(string phoneNumber);
 	}
 
 	public class AccountBusinessService : Service<AspNetUser>, IAccountBusinessService
@@ -66,6 +68,36 @@ namespace EventManager.BusinessService
 			{
 				//_repository = new Repository<AspNetUser>(context, unitOfWork);
 				var uAccount = _repository.Queryable().Where(x => x.Email == email).FirstOrDefault();
+				if (uAccount == null) return null;
+				model = new ApiAccountModel();
+				if (uAccount != null)
+				{
+					model.Id = uAccount.Id;
+					model.FirstName = uAccount.FirstName;
+					model.LastName = uAccount.LastName;
+					model.Email = uAccount.Email;
+					model.PhoneNumber = uAccount.PhoneNumber;
+					model.CityId = uAccount.CityId;
+					model.BirthDate = uAccount.BirthDate;
+					model.Address = uAccount.Address;
+					model.QRCode = uAccount.QRCode;
+					model.PasswordHash = uAccount.PasswordHash;
+					model.DeviceId = uAccount.DeviceId;
+					model.IdentityNumber = uAccount.IdentityNumber;
+					model.SignatureImgPath = uAccount.SignatureImgPath;
+				}
+			}
+			return model;
+		}
+
+		public ApiAccountModel GetAccountInfoByPhone(string phoneNumber)
+		{
+			ApiAccountModel model = null;
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				//_repository = new Repository<AspNetUser>(context, unitOfWork);
+				var uAccount = _repository.Queryable().Where(x => x.PhoneNumber.Trim() == phoneNumber.Trim()).FirstOrDefault();
 				if (uAccount == null) return null;
 				model = new ApiAccountModel();
 				if (uAccount != null)
