@@ -20,6 +20,7 @@ namespace EventManager.BusinessService
     {
         void SaveSignatureImage(string userId, string imgPath);
         void SaveDeviceToken(string userId, string token);
+        void SendNotificationToUserByCity(int cityId, string message);
     }
     public class UserService: IUserService
     {
@@ -46,6 +47,20 @@ namespace EventManager.BusinessService
                 user.DeviceId = token;
                 _userRepository.Update(user);
                 unitOfWork.SaveChanges();
+            }
+        }
+        public void SendNotificationToUserByCity(int cityId,string message)
+        {
+            INotificationService srvNotification = new NotificationService();
+            using (IDataContextAsync context = new GameManagerContext())
+            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+            {
+                _userRepository = new Repository<AspNetUser>(context, unitOfWork);
+                var users = _userRepository.Filter(c => c.CityId == cityId).ToList();
+                foreach(var user in users)
+                {
+                    srvNotification.NotifyAsync(user.DeviceId,message);
+                }
             }
         }
     }

@@ -13,12 +13,14 @@ namespace EventManager.BusinessService
 {
     public interface INotificationService
     {
-        void NotifyAsync(string _apiKey, string _appId, string to, string message);
+        void NotifyAsync(string to, string message);
     }
     public class NotificationService : INotificationService
     {
-        public void NotifyAsync(string _apiKey, string _appId, string to, string message)
+        public void NotifyAsync(string to, string message)
         {
+            var _apiKey = "NTcyNmI3MTEtZmQ4My00YTE4LTk5ZTEtMTliODZmNjcyYTBl";
+            var _appId = "16df746e-2fab-4a86-88ca-bbcee8d8b76c";
             var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
             request.KeepAlive = true;
             request.Method = "POST";

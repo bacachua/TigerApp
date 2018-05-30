@@ -173,7 +173,7 @@ namespace EventManager.BusinessService
                     var startTime = new DateTime(item.StartDateTime.Value.Year, item.StartDateTime.Value.Month, item.StartDateTime.Value.Day, item.StartDateTime.Value.Hour, item.StartDateTime.Value.Minute, 0);
                     while (startTime < item.EndDateTime.Value)
                     {
-                        if (startTime > currentDate)
+                        if (startTime > currentDate && startTime.Hour < 12 && startTime.Hour > 15)
                         {
 							
                             var eventRegisters = entity.EventRegisters.Where(c => c.StartDateTime == startTime && statusList.Contains(c.Status) ).ToList();
@@ -223,7 +223,7 @@ namespace EventManager.BusinessService
                 var startTime = new DateTime(model.StartDateTime.Value.Year, model.StartDateTime.Value.Month, model.StartDateTime.Value.Day, model.StartDateTime.Value.Hour, model.StartDateTime.Value.Minute, 0);
                 while (startTime < model.EndDateTime.Value)
                 {
-                    if (startTime > currentDate)
+                    if (startTime > currentDate && startTime.Hour < 12 && startTime.Hour > 15)
                     {
                         var eventRegisters = entity.EventRegisters.Where(c => c.StartDateTime == startTime).ToList();
                         var numOfPlayerAvailable = model.NumberOfPlayer1Time - eventRegisters.Sum(c => c.NumberOfPlayer1Time);
@@ -253,7 +253,7 @@ namespace EventManager.BusinessService
             {
                 _repository = new Repository<EventCampaign>(context, unitOfWork);
                 var entity = _repository.AllIncluding(c => c.EventRegisters).FirstOrDefault(c=>c.EventCampaignID == model.EventCampaignID);
-                if(model.StartDateTime < entity.StartDateTime || model.EndDateTime >= entity.EndDateTime)
+                if(model.StartDateTime < entity.StartDateTime || model.EndDateTime >= entity.EndDateTime || (model.StartDateTime.Hour >= 12 && model.StartDateTime.Hour <= 15))
                 {
                     return false;
                 }
@@ -319,7 +319,7 @@ namespace EventManager.BusinessService
                     iNotificationService = new NotificationService();
                     foreach (var item in entities)
                     {
-                        iNotificationService.NotifyAsync("NTcyNmI3MTEtZmQ4My00YTE4LTk5ZTEtMTliODZmNjcyYTBl", "16df746e-2fab-4a86-88ca-bbcee8d8b76c", item.AspNetUser.DeviceId, message);
+                        iNotificationService.NotifyAsync(item.AspNetUser.DeviceId, message);
                         item.Status = (int)status;
                         item.AspNetUser = null;
                         _eventRegisterRepo.Update(item);
