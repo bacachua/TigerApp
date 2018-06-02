@@ -32,11 +32,13 @@ namespace EventManager.BusinessService
             {
                 app_id = _appId,
                 contents = new { en = message },
-                included_segments = new string[] { "Active Users" }
+                include_player_ids = new string[] { to }
             };
             var param = serializer.Serialize(obj);
             byte[] byteArray = Encoding.UTF8.GetBytes(param);
+
             string responseContent = null;
+
             try
             {
                 using (var writer = request.GetRequestStream())
