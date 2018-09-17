@@ -18,6 +18,7 @@ namespace EventManager.BusinessService
     public class NotificationService : INotificationService
     {
 
+
 		public void NotifyAsync(string to, string message)
 		{
 			var _apiKey = "NTcyNmI3MTEtZmQ4My00YTE4LTk5ZTEtMTliODZmNjcyYTBl";
@@ -47,12 +48,32 @@ namespace EventManager.BusinessService
 
 			string responseContent = null;
 
-			try
-			{
-				using (var writer = request.GetRequestStream())
-				{
-					writer.Write(byteArray, 0, byteArray.Length);
-				}
+			//try
+			//{
+			//	using (var writer = request.GetRequestStream())
+			//	{
+			//		writer.Write(byteArray, 0, byteArray.Length);
+			//	}
+
+			//var serializer = new JavaScriptSerializer();            
+			//var obj = new
+			//{
+			//	app_id = _appId,
+			//	contents = new { en = message },
+			//	include_player_ids = new string[] { to }
+			//};
+			//var param = serializer.Serialize(obj);
+			//byte[] byteArray = Encoding.UTF8.GetBytes(param);
+
+			//string responseContent = null;
+
+            try
+            {
+                using (var writer = request.GetRequestStream())
+                {
+                    writer.Write(byteArray, 0, byteArray.Length);
+                }
+
 
 				using (var response = request.GetResponse() as HttpWebResponse)
 				{
