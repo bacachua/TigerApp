@@ -10,6 +10,9 @@ namespace EventManager.Web.Models
 		public int CityID { get; set; }
 		public string Name { get; set; }
 
+		public bool EvtHappened { get; set; }
+
+		public int Position { get; set; }
 		public string Period
 		{
 

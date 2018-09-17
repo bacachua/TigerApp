@@ -31,7 +31,9 @@ namespace EventManager.DataModel.Models
         public DbSet<Event> Events { get; set; }
         public DbSet<EventCampaign> EventCampaigns { get; set; }
         public DbSet<EventCategory> EventCategories { get; set; }
-        public DbSet<EventRegister> EventRegisters { get; set; }
+        public DbSet<Gift> Gifts { get; set; }
+		public DbSet<EventRegister> EventRegisters { get; set; }
+		public DbSet<UserGiftRedeem> UserGiftRedeems { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -46,6 +48,10 @@ namespace EventManager.DataModel.Models
             modelBuilder.Configurations.Add(new EventCategoryMap());
             modelBuilder.Configurations.Add(new EventRegisterMap());
             modelBuilder.Configurations.Add(new sysdiagramMap());
+			modelBuilder.Configurations.Add(new MessageContentMap());
+			modelBuilder.Configurations.Add(new MessageContentSentMap());
+			modelBuilder.Configurations.Add(new GifMap());
+			modelBuilder.Configurations.Add(new UserGiftRedeemMap());
         }
     }
 }

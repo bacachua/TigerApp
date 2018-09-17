@@ -36,6 +36,9 @@ namespace EventManager.Web
             // Enforce HTTPS
             //config.Filters.Add(new EventManager.Web.Filters.RequireHttpsAttribute());
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+		///	config.Formatters.me.SupportedMediaTypes.Add(new MediaTypeHeaderValue("video/mp4"));
+			config.Formatters.XmlFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("video/mp4"));
+			config.Formatters.XmlFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("video/mp3"));
             config.Formatters.XmlFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("multipart/form-data"));
 
         }

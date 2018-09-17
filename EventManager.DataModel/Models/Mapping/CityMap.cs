@@ -19,6 +19,8 @@ namespace EventManager.DataModel.Models.Mapping
             this.ToTable("City");
             this.Property(t => t.CityID).HasColumnName("CityID");
             this.Property(t => t.Name).HasColumnName("Name");
+			this.Property(t => t.EvtHappened).HasColumnName("EvtHappened");
+			this.Property(t => t.Position).HasColumnName("Position");
         }
     }
 }

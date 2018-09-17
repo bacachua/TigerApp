@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiAccountImage.cs" />
+    <Compile Include="ApiGifModel.cs" />
+    <Compile Include="ApiRemainingPoint.cs" />
+    <Compile Include="ApiUserGifRedeemModel.cs" />
+    <Compile Include="MessageContentSentModel.cs" />
     <Compile Include="ApiAccountModel.cs" />
     <Compile Include="ApiEventCampaignModel.cs" />
     <Compile Include="ApiEventRegisterModel.cs" />

@@ -77,8 +77,35 @@ namespace EventManager.Web.Models
 
 		public string SignatureImgPath { get; set; }
 		public int Status { get;set; }
+
+		public int UserType { get; set; }
 	
     }
+
+	public class AccountUpdateBindingModel
+	{
+		public string Id { get; set; }
+
+		[Required]
+		[Display(Name = "Email")]
+		public string Email { get; set; }
+
+		
+		public string Address { get; set; }
+		
+		public string FullName { get; set; }
+		
+		
+		
+		public int CityId { get; set; }
+
+		public string QRCode { get; set; }
+
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
+		
+		public System.DateTime BirthDate { get; set; }	
+	}
 
     public class RegisterExternalBindingModel
     {

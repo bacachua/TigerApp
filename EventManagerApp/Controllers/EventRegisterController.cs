@@ -37,7 +37,7 @@ namespace EventManager.Web.Controllers
         }
 
         // POST: api/EventRegister
-		[AllowAnonymous]
+		/*[AllowAnonymous]
 		[HttpPost]
 		public HttpResponseMessage Post(EventRegisterModel model)
         {
@@ -67,7 +67,7 @@ namespace EventManager.Web.Controllers
 				eventRegister.ObjectState = ObjectState.Added;
 				eventRegister.EventCampaignID= model.EventCampaignID;
 				eventRegister.UserId = model.UserId;
-				eventRegister.StartDateTime = model.StartDateTime;
+				eventRegister.StartDateTime = model.StartDateTime.Value;
 				eventRegister.Status = 0;
 				using (IDataContextAsync context = new GameManagerContext())
 				using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
@@ -114,7 +114,7 @@ namespace EventManager.Web.Controllers
 			};
 			return Request.CreateResponse(HttpStatusCode.OK, okResult);
 			//return Newtonsoft.Json.JsonConvert.SerializeObject(okResult);
-        }
+        }*/
 
         // PUT: api/EventRegister/5
         public void Put(int id, [FromBody]string value)
@@ -146,11 +146,19 @@ namespace EventManager.Web.Controllers
 			{
 				IRepositoryAsync<EventRegister> eventRegisterRepository = new Repository<EventRegister>(context, unitOfWork);
 				IEventRegisterBusinessService billingService = new EventRegisterBusinessService(eventRegisterRepository);
-
-				IQueryFluent<EventRegister> q = eventRegisterRepository.Query(x => x.UserId == userId);
-				eventCampaignList = q.Select(y => new EventRegisterModel { UserId = y.UserId, StartDateTime = y.StartDateTime, EventCampaignID =y.EventCampaignID, Status = y.Status,NumberOfPlayer1Time = y.NumberOfPlayer1Time, TimeToPlayPerSession =  y.TimeToPlayPerSession }).ToList();
-
-				if (eventCampaignList == null)
+				IRepositoryAsync<Event> eventRepository = new Repository<Event>(context, unitOfWork);
+				IQueryFluent<EventRegister> q = eventRegisterRepository.Query(x => x.UserId == userId && x.Status != 1).OrderBy(x => x.OrderBy(y => y.StartDateTime));
+				eventCampaignList = q.Select(y => new EventRegisterModel { EventRegisterID = y.EventRegisterID, UserId = y.UserId, StartDateTime = y.StartDateTime, EndDateTime = y.EndDateTime ,EventCampaignID = y.EventCampaignID, Status = y.Status, NumberOfPlayer1Time = y.NumberOfPlayer1Time, TimeToPlayPerSession = y.TimeToPlayPerSession, EventName = y.EventCampaign.Event.Name , EventID = y.EventCampaign.EventID  }).ToList();
+				foreach(EventRegisterModel itm in eventCampaignList )
+				{
+					Event evnt = eventRepository.Find(itm.EventID);
+					if(evnt != null)
+					{
+						itm.EventName = evnt.Name;
+						itm.ImagePath = evnt.ImagePath;
+					}
+				}
+				if (eventCampaignList == null || eventCampaignList.Count ==0)
 				{
 					return new APIResponse() { Status = eResponseStatus.Fail, Result = Resources.ApiMsg.NoRecordFound };
 					//throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -175,7 +183,11 @@ namespace EventManager.Web.Controllers
 				IRepositoryAsync<EventRegister> eventRegisterRepository = new Repository<EventRegister>(context, unitOfWork);
 				IEventRegisterBusinessService billingService = new EventRegisterBusinessService(eventRegisterRepository);
 				var result = billingService.SetEventRegisterStatus(eventRegisterStatusModel.EventRegisterID, eEventRegisterStatus.Cancelled);
-				return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+				if (!result)
+				{
+					return new APIResponse() { Status = eResponseStatus.Fail, Result = "Trò chơi chỉ có thể huỷ nếu chưa chơi hoặc chưa hết hạn" };
+				}
+				return new APIResponse() { Status = eResponseStatus.Success, Result = "Bạn huỷ đăng ký trò chơi thành công" };
 			}
 		}
 
@@ -188,8 +200,8 @@ namespace EventManager.Web.Controllers
 			{
 				IRepositoryAsync<EventRegister> eventRegisterRepository = new Repository<EventRegister>(context, unitOfWork);
 				IEventRegisterBusinessService billingService = new EventRegisterBusinessService(eventRegisterRepository);
-				var result = billingService.SetEventRegisterStatus(eventRegisterStatusModel.EventRegisterID, eEventRegisterStatus.Played);
-				return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+				var result = billingService.ConfirmRegisterStatus(eventRegisterStatusModel.EventRegisterID, eEventRegisterStatus.Played);
+				return new APIResponse() { Status = eResponseStatus.Success, Result = "Xác nhận đã tham gia" };
 			}
 		}
 
@@ -202,8 +214,8 @@ namespace EventManager.Web.Controllers
 			{
 				IRepositoryAsync<EventRegister> eventRegisterRepository = new Repository<EventRegister>(context, unitOfWork);
 				IEventRegisterBusinessService billingService = new EventRegisterBusinessService(eventRegisterRepository);
-				var result = billingService.SetEventRegisterStatus(eventRegisterStatusModel.EventRegisterID, eEventRegisterStatus.Late);
-				return new APIResponse() { Status = eResponseStatus.Success, Result = result };
+				var result = billingService.ConfirmRegisterStatus(eventRegisterStatusModel.EventRegisterID, eEventRegisterStatus.Late);
+				return new APIResponse() { Status = eResponseStatus.Success, Result = "Xác nhận đến trễ được cập nhật" };
 			}
 		}
     }

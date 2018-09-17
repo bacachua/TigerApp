@@ -50,18 +50,21 @@ namespace EventManager.BusinessService
             }
         }
         public void SendNotificationToUserByCity(int cityId,string message)
-        {
-            INotificationService srvNotification = new NotificationService();
-            using (IDataContextAsync context = new GameManagerContext())
-            using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
-            {
-                _userRepository = new Repository<AspNetUser>(context, unitOfWork);
-                var users = _userRepository.Filter(c => c.CityId == cityId).ToList();
-                foreach(var user in users)
-                {
-                    srvNotification.NotifyAsync(user.DeviceId,message);
-                }
-            }
+        {			
+			INotificationService srvNotification = new NotificationService();
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				_userRepository = new Repository<AspNetUser>(context, unitOfWork);
+				var users = _userRepository.Filter(c => c.CityId == cityId).ToList();
+				foreach (var user in users)
+				{
+					if (!string.IsNullOrEmpty(user.DeviceId))
+					{
+						srvNotification.NotifyAsync(user.DeviceId, message);
+					}
+				}
+			}
         }
     }
 }

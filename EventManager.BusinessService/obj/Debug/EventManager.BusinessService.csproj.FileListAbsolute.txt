@@ -63,11 +63,11 @@ D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\Enti
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\EventManager.ApiModels.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\EventManager.DataModel.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\EventManager.Repository.dll
+D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\LinqKit.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\Newtonsoft.Json.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\Repository.Pattern.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\Repository.Pattern.Ef6.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\Service.Pattern.dll
-D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\LinqKit.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\Microsoft.Practices.ServiceLocation.dll
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\EventManager.ApiModels.pdb
 D:\UniWin\QuanLyTroChoi\Src\TigerApp\EventManager.BusinessService\bin\Debug\EventManager.DataModel.pdb

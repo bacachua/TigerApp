@@ -100,6 +100,27 @@ namespace EventManager.Web.Controllers
             }
         }
 
+		[Route("UpdateUserQRCode")]
+		[AllowAnonymous]
+		[HttpPost]
+		public APIResponse UpdateUserQRCode(string userid, string qrCode)
+		{
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
+				AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+				//ApiAccountModel apiAccountModel = AccountBusinessServiceService.UpdateQRCode(userid, qrCode);
+				Tuple<bool, string> ret = UpdateUserQRCodetoDB(userid, qrCode);
+				if (ret.Item1 == false)
+				{
+					return new APIResponse() { Status = eResponseStatus.Fail, Result = "Cập nhật không thành công" };
+				}
+				return new APIResponse() { Status = eResponseStatus.Success, Result = "Cậo nhật thành công" };
+			}
+		}
+
+
 		//[Authorize]
 		[Route("GetUserInfoByEmail")]
 		[AllowAnonymous]
@@ -429,7 +450,7 @@ namespace EventManager.Web.Controllers
             model.PasswordHash = user.PasswordHash;
 			try
 			{
-				Tuple<bool, string> updateResult = UpdateUserInfo(model);				
+				Tuple<bool, string> updateResult = AddUpdateUserInfo(model);				
 			}catch(Exception ex)
 			{
 
@@ -477,13 +498,13 @@ namespace EventManager.Web.Controllers
         }
 
 		// PUT: api/EventRegister/5
-		public APIResponse Put(RegisterBindingModel model)
+		public APIResponse Put(AccountUpdateBindingModel model)
 		{
 			Tuple<bool, string> ret = UpdateUserInfo(model);
 			return new APIResponse() { Status = eResponseStatus.Success, Result = ret.Item1 };
 		}
 
-		private Tuple<bool, string> UpdateUserInfo(RegisterBindingModel model)
+		private Tuple<bool, string> AddUpdateUserInfo(RegisterBindingModel model)
 		{
 			Tuple<bool, string> ret = new Tuple<bool,string>(true,"Success");
 			try
@@ -499,7 +520,7 @@ namespace EventManager.Web.Controllers
 					
 					aspNetUser = customerRepository.Queryable().Where(x => x.Id == model.Id).SingleOrDefault<AspNetUser>();
 					aspNetUser.ObjectState = ObjectState.Modified;
-					aspNetUser.Id = model.Id;
+					//aspNetUser.Id = model.Id;
 					//DateTime actualDate = new DateTime(Convert.ToInt16(model.BirthDate.Substring(0, 4)), Convert.ToInt16(model.BirthDate.Substring(5, 2)), Convert.ToInt16(model.BirthDate.Substring(8, 2)));
 					//aspNetUser.BirthDate = actualDate;
 					aspNetUser.BirthDate = model.BirthDate;
@@ -509,11 +530,12 @@ namespace EventManager.Web.Controllers
 					aspNetUser.FirstName = model.FirstName;
 					aspNetUser.LastName = model.LastName;
 					aspNetUser.QRCode = model.QRCode;
-					
-					aspNetUser.PhoneNumber = model.PhoneNumber;
+				//	aspNetUser.CityId = model.CityId;
+					aspNetUser.PhoneNumber = aspNetUser.UserName;
 					aspNetUser.Address = model.Address;
-					aspNetUser.UserName = model.PhoneNumber;
+				//	aspNetUser.PhoneNumber = aspNetUser.UserName;
 					aspNetUser.SignatureImgPath = model.SignatureImgPath;
+					aspNetUser.UserType = 0;
 					customerRepository.InsertOrUpdateGraph(aspNetUser);
 					unitOfWork.SaveChanges();
 				}
@@ -526,6 +548,83 @@ namespace EventManager.Web.Controllers
 			{			
 				ret = new Tuple<bool, string>(false, ex.Message);
 			}		
+			return ret;
+		}
+
+		private Tuple<bool, string> UpdateUserInfo(AccountUpdateBindingModel model)
+		{
+			Tuple<bool, string> ret = new Tuple<bool, string>(true, "Success");
+			try
+			{
+				// TODO: Add update logic here
+				AspNetUser aspNetUser = new AspNetUser();
+
+				using (IDataContextAsync context = new GameManagerContext())
+				using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+				{
+					IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
+					AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+
+					aspNetUser = customerRepository.Queryable().Where(x => x.Id == model.Id).SingleOrDefault<AspNetUser>();
+					aspNetUser.ObjectState = ObjectState.Modified;
+					//aspNetUser.Id = model.Id;
+					//DateTime actualDate = new DateTime(Convert.ToInt16(model.BirthDate.Substring(0, 4)), Convert.ToInt16(model.BirthDate.Substring(5, 2)), Convert.ToInt16(model.BirthDate.Substring(8, 2)));
+					//aspNetUser.BirthDate = actualDate;
+					aspNetUser.BirthDate = model.BirthDate;
+					aspNetUser.Email = model.Email;
+					aspNetUser.CityId = model.CityId;
+					aspNetUser.FullName = model.FullName;
+					aspNetUser.FirstName = model.FirstName;
+					aspNetUser.LastName = model.LastName;
+					aspNetUser.QRCode = model.QRCode;		
+					aspNetUser.Address = model.Address;			
+					customerRepository.Update(aspNetUser);
+					unitOfWork.SaveChanges();
+				}
+			}
+			catch (DbEntityValidationException ex)
+			{
+				ret = new Tuple<bool, string>(false, ex.Message);
+			}
+			catch (Exception ex)
+			{
+				ret = new Tuple<bool, string>(false, ex.Message);
+			}
+			return ret;
+		}
+
+		private Tuple<bool, string> UpdateUserQRCodetoDB(string userid, string qrCode)
+		{
+			Tuple<bool, string> ret = new Tuple<bool, string>(true, "Success");
+			try
+			{
+				// TODO: Add update logic here
+				AspNetUser aspNetUser = new AspNetUser();
+
+				using (IDataContextAsync context = new GameManagerContext())
+				using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+				{
+					IRepositoryAsync<AspNetUser> customerRepository = new Repository<AspNetUser>(context, unitOfWork);
+					AccountBusinessService AccountBusinessServiceService = new AccountBusinessService(customerRepository);
+
+					aspNetUser = customerRepository.Queryable().Where(x => x.Id == userid).SingleOrDefault<AspNetUser>();
+					aspNetUser.ObjectState = ObjectState.Modified;
+					
+					aspNetUser.QRCode = qrCode;
+
+				
+					customerRepository.InsertOrUpdateGraph(aspNetUser);
+					unitOfWork.SaveChanges();
+				}
+			}
+			catch (DbEntityValidationException ex)
+			{
+				ret = new Tuple<bool, string>(false, ex.Message);
+			}
+			catch (Exception ex)
+			{
+				ret = new Tuple<bool, string>(false, ex.Message);
+			}
 			return ret;
 		}
         protected override void Dispose(bool disposing)
@@ -718,5 +817,77 @@ namespace EventManager.Web.Controllers
                 return new APIResponse() { Status = eResponseStatus.Fail, Message = "Please Upload image of type .jpg,.gif,.png." };
             }
         }
+
+		[HttpPost]
+		[Route("SendNotificationByDevice")]
+		[AllowAnonymous]
+		public APIResponse SendNotificationByDevice(string token, string message)
+		{
+			//INotificationService user = new NotificationService();
+			//user.NotifyAsync(token, message);
+
+			string test = RequestContext.Principal.Identity.Name;
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				IRepositoryAsync<AspNetUser> _repository = new Repository<AspNetUser>(context, unitOfWork);
+				List<AspNetUser> uAccounts = _repository.Queryable().Where(x => x.DeviceId.Trim() == token.Trim()).ToList();
+				foreach (AspNetUser user in uAccounts)
+				{
+					IContentBusinessService contentBusinessService = new ContentBusinessService();
+					MessageContent messageContent = new MessageContent();
+					if (!string.IsNullOrEmpty(user.DeviceId))
+					{
+						messageContent.Receiver = user.DeviceId;
+						messageContent.BodyMessage = message;
+						messageContent.ServiceTypeID = 0;
+						messageContent.Status = 0;
+						messageContent.ModifiedDate = DateTime.Now;
+						messageContent.CreatedDate = DateTime.Now;
+						messageContent.Sender = "TigerWall";
+						messageContent.UserId = user.Id;
+						contentBusinessService.InserContentMessage(messageContent);
+						
+					}
+				}
+			}
+			return new APIResponse() { Status = eResponseStatus.Success , Result = "success" };
+		}
+
+		[HttpPost]
+		[Route("SendNotificationBeforeOrLate")]
+		[AllowAnonymous]
+		public APIResponse SendNotificationBeforeOrLateEventTime(int numOfMinute, string token, string message,int status)
+		{
+			if (status != (int)eEventRegisterStatus.Late || status == (int)eEventRegisterStatus.Reminded)
+			{
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = "Hệ thống chỉ hỗ trợ gửi thông báo trước giờ chơi, hoặc trễ giờ chơi" };
+			}
+			try
+			{
+				IEventCampaignBusinessService eventCampaignBusinessService = new EventCampaignBusinessService();
+				if (status == (int)eEventRegisterStatus.Late)
+					eventCampaignBusinessService.SendNotificationBeforeOrLateEventTime(numOfMinute, token, message, eEventRegisterStatus.Late);
+				else
+					eventCampaignBusinessService.SendNotificationBeforeOrLateEventTime(numOfMinute, token, message, eEventRegisterStatus.Reminded);
+				return new APIResponse() { Status = eResponseStatus.Success, Result = "Thông báo đã gửi thành công" };
+			}
+			catch(Exception ex)
+			{
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = "Lỗi gửi thông báo tới thiết bị:" + ex.Message };
+			}			
+		}
+
+		[HttpPost]
+		[Route("SendNotificationByType")]
+		[AllowAnonymous]
+		public APIResponse SendNotificationByType(string token, string message)
+		{
+			INotificationService user = new NotificationService();
+			user.NotifyAsync(token, message);
+			return new APIResponse() { Status = eResponseStatus.Success, Result = "success" };
+		}
+
+		
     }
 }

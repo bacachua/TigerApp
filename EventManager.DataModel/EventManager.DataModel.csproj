@@ -51,10 +51,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Models\AspNetUserImg.cs" />
     <Compile Include="Models\AspNetRole.cs" />
     <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\AspNetUserClaim.cs" />
     <Compile Include="Models\AspNetUserLogin.cs" />
+    <Compile Include="Models\Mapping\UserGiftRedeemMap.cs" />
+    <Compile Include="Models\UserGiftRedeem.cs" />
+    <Compile Include="Models\Gift.cs" />
+    <Compile Include="Models\Mapping\AspNetUserImgMap.cs" />
+    <Compile Include="Models\Mapping\GifMap.cs" />
+    <Compile Include="Models\Mapping\MessageContentSentMap.cs" />
+    <Compile Include="Models\Mapping\MessageContentMap.cs" />
+    <Compile Include="Models\MessageContentSent.cs" />
+    <Compile Include="Models\MessageContent.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventCampaign.cs" />

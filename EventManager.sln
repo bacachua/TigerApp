@@ -28,7 +28,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManager.Repository", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManager.ApiModels", "EventManager.ApiModels\EventManager.ApiModels.csproj", "{98C54DF9-C246-4B32-B418-8DB4D9F61985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "NotificationService\NotificationService.csproj", "{763046AF-7983-4FB8-9202-38D2C4762B66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TigerWallNotificationService", "NotificationService\TigerWallNotificationService.csproj", "{763046AF-7983-4FB8-9202-38D2C4762B66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{D88CA043-2EB9-48FD-A955-81CABD312DC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManager.Admin", "EventManager.Admin\EventManager.Admin.csproj", "{8E1B1B4F-C2D4-4EF4-BC62-232AD94C9DBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManager.Admin.Tests", "EventManager.Admin.Tests\EventManager.Admin.Tests.csproj", "{2F0431FB-40E3-4317-989B-FDDC5CA08429}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +102,24 @@ Global
 		{763046AF-7983-4FB8-9202-38D2C4762B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{763046AF-7983-4FB8-9202-38D2C4762B66}.Release|Any CPU.Build.0 = Release|Any CPU
 		{763046AF-7983-4FB8-9202-38D2C4762B66}.Release|x86.ActiveCfg = Release|Any CPU
+		{D88CA043-2EB9-48FD-A955-81CABD312DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D88CA043-2EB9-48FD-A955-81CABD312DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D88CA043-2EB9-48FD-A955-81CABD312DC1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D88CA043-2EB9-48FD-A955-81CABD312DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D88CA043-2EB9-48FD-A955-81CABD312DC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D88CA043-2EB9-48FD-A955-81CABD312DC1}.Release|x86.ActiveCfg = Release|Any CPU
+		{8E1B1B4F-C2D4-4EF4-BC62-232AD94C9DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E1B1B4F-C2D4-4EF4-BC62-232AD94C9DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E1B1B4F-C2D4-4EF4-BC62-232AD94C9DBD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8E1B1B4F-C2D4-4EF4-BC62-232AD94C9DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E1B1B4F-C2D4-4EF4-BC62-232AD94C9DBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E1B1B4F-C2D4-4EF4-BC62-232AD94C9DBD}.Release|x86.ActiveCfg = Release|Any CPU
+		{2F0431FB-40E3-4317-989B-FDDC5CA08429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F0431FB-40E3-4317-989B-FDDC5CA08429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F0431FB-40E3-4317-989B-FDDC5CA08429}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2F0431FB-40E3-4317-989B-FDDC5CA08429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F0431FB-40E3-4317-989B-FDDC5CA08429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F0431FB-40E3-4317-989B-FDDC5CA08429}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

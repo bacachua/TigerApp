@@ -73,27 +73,42 @@ namespace EventManager.Web.Controllers
         [HttpPost]
         public APIResponse IsValidTimeRegister(ApiEventRegisterModel model)
         {
+			int status = 0;
             IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
-            var result = eVentCampaignSrv.IsValidTimeRegister(model);
+            var result = eVentCampaignSrv.IsValidTimeRegister(model, out status);
             return new APIResponse() { Status = eResponseStatus.Success, Result = result };
         }
         [AllowAnonymous]
         [HttpPost]
         public APIResponse RegisterEvent(ApiEventRegisterModel model)
         {	
-			bool result ;            
+			bool result ;
+			int returnCode = 0;
 			try
 			{
 				IEventCampaignBusinessService eVentCampaignSrv = new EventCampaignBusinessService();
-				result = eVentCampaignSrv.RegisterEvent(model);
+				
+				result = eVentCampaignSrv.RegisterEvent(model, out returnCode);
 			}catch(Exception ex)
 			{
-				return new APIResponse() { Status = eResponseStatus.Fail, Result = "Đăng ký trò chơi Không thành công" };
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = "Đăng ký trò chơi Không thành công:" + ex.Message};
 			}
            
 			if (!result)
 			{
-				return new APIResponse() { Status = eResponseStatus.Fail, Result = "Đăng ký trò chơi Không thành công" };
+				if (returnCode == 1  || returnCode == 2)
+				{
+					return new APIResponse() { Status = eResponseStatus.Fail, Result = "Đăng ký trò chơi Không thành công.Bạn không thể đăng ký hơn 5 lần 1 ngày và mỗi lần phải cách nhau 15 phút" };
+				}
+				else if (returnCode == 3)
+				{
+					return new APIResponse() { Status = eResponseStatus.Fail, Result = "Đăng ký trò chơi Không thành công. Thời gian đăng ký không phù hợp" };
+				}
+				else 
+				{
+					return new APIResponse() { Status = eResponseStatus.Fail, Result = "Đăng ký trò chơi Không thành công. Không còn chỗ trống để đăng ký" };
+				}
+				
 			}
 			return new APIResponse() { Status = eResponseStatus.Success, Result = "Đăng ký trò chơi thành công" };
         }

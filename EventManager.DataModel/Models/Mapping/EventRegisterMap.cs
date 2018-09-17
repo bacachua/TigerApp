@@ -26,6 +26,7 @@ namespace EventManager.DataModel.Models.Mapping
             this.Property(t => t.Active).HasColumnName("Active");
             this.Property(t => t.EventCampaignID).HasColumnName("EventCampaignID");
 			this.Property(t => t.Status).HasColumnName("Status");
+			this.Property(t => t.PlayedDate).HasColumnName("PlayedDate");
             // Relationships
             this.HasRequired(t => t.AspNetUser)
                 .WithMany(t => t.EventRegisters)

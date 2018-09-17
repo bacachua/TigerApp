@@ -40,5 +40,9 @@ namespace EventManager.ApiModels
 
 		public string SignatureImgPath { get; set; }
 		public string DeviceId { get; set; }
+
+		public int UserType { get; set; }
+
+		public string CityName { get; set; }
 	}
 }

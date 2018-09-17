@@ -10,6 +10,7 @@ namespace EventManager.ApiModels
     {
         public int EventRegisterID { get; set; }
         public string UserId { get; set; }
+		public string UserName { get; set; }
         public DateTime StartDateTime { get; set; }
         public DateTime? EndDateTime { get; set; }
         public int TimeToPlayPerSession { get; set; }
@@ -17,12 +18,15 @@ namespace EventManager.ApiModels
         public Nullable<bool> Active { get; set; }
         public int EventCampaignID { get; set; }
         public int Status { get; set; }
+		public DateTime PlayedDate { get; set; }
+		
     }
     public class ApiEventRegisterUserModel: ApiEventRegisterModel
     {
         public string EventName { get; set; }
 		public int EventID { get; set; }
         public string CityName { get; set; }
+		public string ImagePath { get; set; }
 		public int? CityID { get; set; }
         public string StatusName { get { return Enum.GetName(typeof(eEventRegisterStatus), Status); } }
     }

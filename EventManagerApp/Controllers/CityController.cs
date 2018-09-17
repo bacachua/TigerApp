@@ -41,8 +41,8 @@ namespace EventManager.Web.Controllers
 				IRepositoryAsync<City> campaignRepository = new Repository<City>(context, unitOfWork);
 				ICityBusinessService billingService = new CityBusinessService(campaignRepository);
 
-				IQueryFluent<City> q = campaignRepository.Query(x => x.CityID > 0);
-				cities = q.Select(y => new CityModel { CityID = y.CityID, Name = y.Name }).ToList();
+				IQueryFluent<City> q = campaignRepository.Query(x => x.CityID > 0).OrderBy(x => x.OrderBy(y=>y.Position));
+				cities = q.Select(y => new CityModel { CityID = y.CityID, Name = y.Name , EvtHappened = y.EvtHappened, Position = y.Position}).ToList();
 				//eventCampaignList = q.SelectAsync().Result.ToList();
 				//(t => new EventCampaignModel { EventCampaignID  = q.EventCampaignID});
 
@@ -90,11 +90,10 @@ namespace EventManager.Web.Controllers
 				ICityBusinessService billingService = new CityBusinessService(campaignRepository);
 
 				IQueryFluent<City> q = campaignRepository.Query(x => x.CityID == cityId);
-				cities = q.Select(y => new CityModel { CityID = y.CityID, Name = y.Name }).ToList();
+				cities = q.Select(y => new CityModel { CityID = y.CityID, Name = y.Name, EvtHappened = y.EvtHappened, Position = y.Position }).ToList();
 
 				foreach (var c in cities)
 				{
-
 					IEventCampaignBusinessService evtCampaignBusinessService = new EventCampaignBusinessService();
 					List<ApiEventCampaignModel> evtList = evtCampaignBusinessService.GetListByCity(c.CityID);
 					if (evtList != null && (evtList.Count > 0))
@@ -123,16 +122,46 @@ namespace EventManager.Web.Controllers
 		// POST: api/City
 		public void Post([FromBody]string value)
 		{
-		}
-
-		// PUT: api/City/5
-		public void Put(int id, [FromBody]string value)
-		{
-		}
-
+		}	
+		
 		// DELETE: api/City/5
 		public void Delete(int id)
 		{
+		}
+
+		[HttpPost]
+		[Route("api/City/SendNotificationByCity")]	
+		public APIResponse SendNotificationByCity(int cityId, string message, string key)
+		{
+			if(!key.Equals("#$@Tiger2018Wall"))
+			{
+				return new APIResponse() { Status = eResponseStatus.Fail, Result = "Ma khong dung" };
+			}
+			 string test = RequestContext.Principal.Identity.Name;
+			 using (IDataContextAsync context = new GameManagerContext())
+			 using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			 {
+				IRepositoryAsync<AspNetUser> _repository = new Repository<AspNetUser>(context, unitOfWork);
+				List<AspNetUser> uAccounts = _repository.Queryable().Where(x => x.CityId == cityId).ToList();
+				foreach(AspNetUser user in uAccounts)
+				{
+					IContentBusinessService contentBusinessService = new ContentBusinessService();
+					MessageContent messageContent = new MessageContent();
+					if (!string.IsNullOrEmpty(user.DeviceId))
+					{
+						messageContent.Receiver = user.DeviceId;
+						messageContent.BodyMessage = message;
+						messageContent.ServiceTypeID = 0;
+						messageContent.Status = 0;
+						messageContent.ModifiedDate = DateTime.Now;
+						messageContent.CreatedDate = DateTime.Now;
+						messageContent.Sender = "TigerWall";
+						messageContent.UserId = user.Id;
+						contentBusinessService.InserContentMessage(messageContent);
+					}					
+				}
+			 }
+			 return new APIResponse()  { Status = eResponseStatus.Success, Result = "Đã tạo thông báp cho các thành viên trong thành phố, Hệ thống sẽ gửi thông báo đến các thành viên" };
 		}
 	}
 }

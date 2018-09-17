@@ -26,6 +26,8 @@ namespace EventManager.DataModel.Models.Mapping
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.TimeToPlayPerSession).HasColumnName("TimeToPlayPerSession");
             this.Property(t => t.NumberOfPlayer1Time).HasColumnName("NumberOfPlayer1Time");
+			this.Property(t => t.ImagePath).HasColumnName("ImagePath");
+			
 
             // Relationships
             this.HasOptional(t => t.EventCategory)

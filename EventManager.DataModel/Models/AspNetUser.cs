@@ -12,6 +12,8 @@ namespace EventManager.DataModel.Models
             this.AspNetUserLogins = new List<AspNetUserLogin>();
             this.EventRegisters = new List<EventRegister>();
             this.AspNetRoles = new List<AspNetRole>();
+			this.UserGiftRedeems = new List<UserGiftRedeem>();
+
         }
 
         public string Id { get; set; }
@@ -40,16 +42,24 @@ namespace EventManager.DataModel.Models
         public string Gender { get; set; }
         public string IdentityNumber { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
-        public Nullable<int> CityId { get; set; }
+        public int CityId { get; set; }
+
+		public City UserCity { get; set; }
         public string QRCode { get; set; }
         public string Comment { get; set; }
         public string SignatureImgPath { get; set; }
 
-
+		public int UserType { get; set; }
         public string DeviceId { get; set; }
+
+		
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<EventRegister> EventRegisters { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+		public virtual ICollection<AspNetUserImg> AspNetUserImages { get; set; }
+		public virtual ICollection<UserGiftRedeem> UserGiftRedeems { get; set; }
+
+	
     }
 }

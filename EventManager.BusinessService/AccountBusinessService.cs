@@ -13,6 +13,7 @@ using Repository.Pattern.DataContext;
 using Repository.Pattern.UnitOfWork;
 using Repository.Pattern.Ef6;
 using EventManager.ApiModels;
+using Repository.Pattern.Infrastructure;
 
 namespace EventManager.BusinessService
 {
@@ -22,6 +23,11 @@ namespace EventManager.BusinessService
 		ApiAccountModel GetAccountInfoByEmail(string email);
 
 		ApiAccountModel GetAccountInfoByPhone(string phoneNumber);
+
+		ApiAccountModel UpdateQRCode(string userId,string qrCode);
+
+		IList<ApiAccountModel> GetAccounts(int page, int pageSize, int cityId, out int totalRow);
+
 	}
 
 	public class AccountBusinessService : Service<AspNetUser>, IAccountBusinessService
@@ -33,6 +39,41 @@ namespace EventManager.BusinessService
 			_repository = repository;
 		}
 
+		public ApiAccountModel UpdateQRCode(string userId, string qrCode)
+		{
+			ApiAccountModel model = null;
+            using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				//_repository = new Repository<AspNetUser>(context, unitOfWork);
+				AspNetUser uAccount = _repository.Queryable().Where(x => x.Id == userId).FirstOrDefault();
+				if (uAccount == null) return null;
+				model = new ApiAccountModel();
+				uAccount.ObjectState = ObjectState.Modified;
+				uAccount.QRCode = qrCode;
+				//unitOfWork.BeginTransaction();
+
+				_repository.InsertOrUpdateGraph(uAccount);
+				unitOfWork.SaveChanges();
+				//unitOfWork.Commit();
+				model.Id = uAccount.Id;
+				model.FirstName = uAccount.FirstName;
+				model.LastName = uAccount.LastName;
+				model.Email = uAccount.Email;
+				model.PhoneNumber = uAccount.PhoneNumber;
+				model.CityId = uAccount.CityId;
+				model.BirthDate = uAccount.BirthDate;
+				model.Address = uAccount.Address;
+				model.QRCode = uAccount.QRCode;
+				model.PasswordHash = uAccount.PasswordHash;
+				model.DeviceId = uAccount.DeviceId;
+				model.IdentityNumber = uAccount.IdentityNumber;
+				model.SignatureImgPath = uAccount.SignatureImgPath;
+				model.UserType = uAccount.UserType;
+			}
+			return model;
+		}
+		
 		public ApiAccountModel GetAccountInfo(string userId)
 		{
 			ApiAccountModel model = null;
@@ -56,6 +97,7 @@ namespace EventManager.BusinessService
 				model.DeviceId = uAccount.DeviceId;
 				model.IdentityNumber = uAccount.IdentityNumber;
 				model.SignatureImgPath = uAccount.SignatureImgPath;
+				model.UserType = uAccount.UserType;
 			}
 			return model;
 		}
@@ -85,6 +127,7 @@ namespace EventManager.BusinessService
 					model.DeviceId = uAccount.DeviceId;
 					model.IdentityNumber = uAccount.IdentityNumber;
 					model.SignatureImgPath = uAccount.SignatureImgPath;
+					model.UserType = uAccount.UserType;
 				}
 			}
 			return model;
@@ -115,9 +158,43 @@ namespace EventManager.BusinessService
 					model.DeviceId = uAccount.DeviceId;
 					model.IdentityNumber = uAccount.IdentityNumber;
 					model.SignatureImgPath = uAccount.SignatureImgPath;
+					model.UserType = uAccount.UserType;
 				}
 			}
 			return model;
+		}
+
+		public IList<ApiAccountModel> GetAccounts(int page, int pageSize, int cityId, out int totalRow)
+		{
+			
+			totalRow = 0;
+			using (IDataContextAsync context = new GameManagerContext())
+			using (IUnitOfWorkAsync unitOfWork = new UnitOfWork(context))
+			{
+				//_repository = new Repository<AspNetUser>(context, unitOfWork);
+				var model = _repository.Query(x => x.CityId == cityId).Include(x=>x.UserCity).OrderBy(x => x.OrderByDescending(z => z.BirthDate)).SelectPage(page, pageSize, out totalRow).ToList().Select(
+					c => new ApiAccountModel()
+						{
+							City = c.City,
+							BirthDate = c.BirthDate,
+							DeviceId = c.DeviceId,
+							UserName = c.UserName,
+							FirstName = c.FirstName,
+							LastName = c.LastName,
+							PhoneNumber = c.PhoneNumber,
+							CityId = c.CityId,
+							Email = c.Email,
+							Id = c.Id,
+							QRCode  = c.QRCode,
+							UserType = c.UserType,
+							SignatureImgPath = c.SignatureImgPath,
+							Address = c.Address,
+							CityName = c.UserCity.Name
+						}
+					);
+				return model.ToList();				
+			}
+			
 		}
 	}
 }

@@ -98,6 +98,7 @@ namespace EventManager.DataModel.Models.Mapping
             this.Property(t => t.QRCode).HasColumnName("QRCode");
             this.Property(t => t.Comment).HasColumnName("Comment");
             this.Property(t => t.SignatureImgPath).HasColumnName("SignatureImgPath");
+			this.Property(t => t.UserType).HasColumnName("UserType");
 
             // Relationships
             this.HasMany(t => t.AspNetRoles)
@@ -108,7 +109,9 @@ namespace EventManager.DataModel.Models.Mapping
                         m.MapLeftKey("UserId");
                         m.MapRightKey("RoleId");
                     });
-
+			this.HasRequired(t => t.UserCity)
+			  .WithMany(t => t.AspNetUsers)
+			  .HasForeignKey(d => d.CityId);
 
         }
     }
